@@ -62,13 +62,19 @@ public class servletEnregistrer extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Utilisateur u = new Utilisateur(Long.valueOf("10"));
+        Utilisateur u = new Utilisateur(new Long("10"));
         u.setNomUsr(request.getParameter("nom"));
         u.setPrenomUsr(request.getParameter("prenom"));
         u.setAdressUsr(request.getParameter("addresse") + ", " + request.getParameter("codePostale") + ", " + request.getParameter("ville"));
         u.setTelephoneUsr(request.getParameter("telephone"));
         u.setMailUsr(request.getParameter("mail"));
         u.setPasswordUser(request.getParameter("pass"));
+        
+        if(request.getParameter("profile")==null){
+            u.setProfileUsr("CLT");
+        }else{
+            u.setProfileUsr("RST");
+        }
         comptesInterface.registerUser(u);
     }
 

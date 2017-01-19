@@ -67,19 +67,12 @@ public class servletAuthentification extends HttpServlet {
         //System.out.println(usr.getPasswordUser()); 
         if (usr != null) {
             if (usr.getPasswordUser() != null) {
-                try (PrintWriter out = response.getWriter()) {
-                    /* TODO output your page here. You may use following sample code. */
-                    response.setContentType("text/html;charset=UTF-8");
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Servlet servletAuthentification</title>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<h1> connected as " + usr.getNomUsr() + "   " + usr.getPasswordUser() + "</h1>");
-                    out.println("</body>");
-                    out.println("</html>");
+                if (usr.getProfileUsr().equals("CLT")) {
+                     response.sendRedirect("ClientHome.html");
+                }else{
+                    response.sendRedirect("RestaurateurHome.html"); 
                 }
+               
             } else {
                 response.sendRedirect("Login.html");
             }
