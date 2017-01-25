@@ -1,10 +1,62 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : Jan 19, 2017, 8:49:07 AM
-    Author     : Ibra
-*/
+/**********************************
+Responsive navbar-brand image CSS
+- Remove navbar-brand padding for firefox bug workaround
+- add 100% height and width auto ... similar to how bootstrap img-responsive class works
+***********************************/
 
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height: 100%;
+  padding: 15px;
+  width: auto;
+}
+
+
+/* EXAMPLE 6 - Background Logo*/
+.example6 .navbar-brand{ 
+  background: url(imgs/logo.png) left / contain no-repeat;
+  width: 200px;
+}
+
+
+/* CSS Transform Align Navbar Brand Text ... This could also be achieved with table / table-cells */
+.navbar-alignit .navbar-header {
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  height: 50px;
+}
+.navbar-alignit .navbar-brand {
+	top: 50%;
+	display: block;
+	position: relative;
+	height: auto;
+	transform: translate(0,-50%);
+	margin-right: 15px;
+        margin-left: 0px;
+        
+}
+.brandName{
+    color: #33ff66;
+    font-family: PainterFont;
+    font-size: 25px;
+    position: inherit;
+    padding-top: 20px;
+}
+
+
+
+
+.navbar-nav>li>.dropdown-menu {
+	z-index: 9999;
+}
+
+body {
+  font-family: "Lato";
+}
+@font-face {
+    font-family: 'PainterFont'; /*a name to be used later*/
+    src: url('fonts/Painter_PERSONAL_USE_ONLY.ttf'); /*URL to font*/
+}
