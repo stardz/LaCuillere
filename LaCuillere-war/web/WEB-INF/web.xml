@@ -12,6 +12,10 @@
         <servlet-name>servletEnregistrer</servlet-name>
         <servlet-class>servlets.servletEnregistrer</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletPanel</servlet-name>
+        <servlet-class>servlets.servletPanel</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>authentificationServlet</servlet-name>
         <url-pattern>/authentificationServlet</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>servletEnregistrer</servlet-name>
         <url-pattern>/servletEnregistrer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletPanel</servlet-name>
+        <url-pattern>/servletPanel</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -6,6 +6,8 @@
 package servlets;
 
 import Interfaces.AnnonceInterface;
+import Interfaces.MenuInterfacel;
+import Interfaces.PlageInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -15,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Interfaces.UtilisateurInterface;
 import entities.Annonce;
+import entities.Menu;
+import entities.Plage;
 import entities.Utilisateur;
 import java.util.List;
 
@@ -28,6 +32,8 @@ public class servletAuthentification extends HttpServlet {
     UtilisateurInterface comptesInterface;
     @EJB
     AnnonceInterface annonceInterface;
+    @EJB
+    PlageInterface plageInterface;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -67,10 +73,26 @@ public class servletAuthentification extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         List<Annonce> listeAnnonce = annonceInterface.getAllAnonces();
+        List<Plage> listePlage = plageInterface.getAllPlages();
         Utilisateur usr = comptesInterface.getUser(request.getParameter("user"), request.getParameter("pass"));
         //System.out.println(usr.getPasswordUser()); 
         request.setAttribute("listeAnnonces", listeAnnonce);
+        request.setAttribute("listePlage", listePlage);
         if (usr != null) {
             if (usr.getPasswordUser() != null) {
                 if (usr.getProfileUsr().equals("CLT")) {
@@ -85,20 +107,6 @@ public class servletAuthentification extends HttpServlet {
         } else {
             response.sendRedirect("Login.html");
         }
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**

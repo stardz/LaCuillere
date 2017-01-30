@@ -4,6 +4,7 @@
     Author     : Ibra
 --%>
 
+<%@page import="entities.Plage"%>
 <%@page import="entities.Menu"%>
 <%@page import="java.util.List"%>
 <%@page import="entities.Annonce"%>
@@ -25,12 +26,34 @@
         <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
         <title>Client Space</title>
         <script>
-            function filterMenus(idAnnonce){
-//                alert(''+idAnnonce);
-//                $('[class^="ann_"]').show();
-//                $( ".ann_"+idAnnonce).hide();
-//                  $('.ann_'+idAnnonce).hide();
-                alert($('[class^="ann_"]').toArray().length);
+            var annonce;
+            var menu;
+            var plage;
+            function filterMenus(idAnnonce) {
+                $("div[class*='ann']").hide();
+                $('.ann_' + idAnnonce).show();
+                $('#tab2').tab('show');
+            }
+            function filterPlages(idAnnonce, idMenu) {
+                $("button[class*='plage_an']").hide();
+                $('.plage_an' + idAnnonce).show();
+                annonce = idAnnonce;
+                menu = idMenu;
+                //  $('#tab2').tab('show');
+            }
+            function pushIdPlage(idP) {
+                idPlage = idP;
+            }
+            function addToPanel() {
+                alert(annonce + '-' + menu + '-' + idPlage);
+                var params = {
+                    menu: menu,
+                    idPlage: idPlage
+                };
+
+                $.post("servletPanel", $.param(params), function (response) {
+                    $('.event-list').append(response.toString());
+                });
             }
         </script>
     </head>
@@ -40,13 +63,13 @@
         <div id="exTab3" class="container">	
             <ul  class="nav nav-pills">
                 <li class="active">
-                    <a  href="#1b" data-toggle="tab">Annonces</a>
+                    <a id="tab1" href="#1b" data-toggle="tab">Annonces</a>
                 </li>
-                <li><a href="#2b" data-toggle="tab">Menus</a>
+                <li><a id="tab2" href="#2b" data-toggle="tab">Menus</a>
                 </li>
-                <li><a href="#3b" data-toggle="tab">Mon Panier</a>
+                <li><a id="tab3" href="#3b" data-toggle="tab">Mon Panier</a>
                 </li>
-                <li><a href="#4a" data-toggle="tab">Mes réservations</a>
+                <li><a id="tab4" href="#4a" data-toggle="tab">Mes réservations</a>
                 </li>
             </ul>
 
@@ -65,7 +88,7 @@
 //                                out.println("<div>");
                                 out.println("<p style='color:black;'>Rating : <i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-half-o' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-o' aria-hidden='true' style='display: inline-block;'></i></p>");
 //                                out.println("</div>");
-                                out.println("<button class='w3-btn w3-green' style='margin-bottom:5px;' onclick='filterMenus("+it.getIdAnnonce()+")'>Voir nos Menus!</button>");
+                                out.println("<button class='w3-btn w3-green' style='margin-bottom:5px;' onclick='filterMenus(" + it.getIdAnnonce() + ")'>Voir nos Menus!</button>");
                                 out.println("  </div>");
                                 out.println("</div>");
                             }
@@ -79,17 +102,14 @@
                             for (Annonce it : listeAnn) {
 //                                out.println("<br/>");
                                 for (Menu it2 : it.getMenuCollection()) {
-                                    out.println("<div id='men_" + it2.getIdMenu() + "' class='w3-card-12 ann_"+it.getIdAnnonce()+"' style='width:250px;height:300px;margin:5px;display:inline-block;'>");
+                                    out.println("<div id='men_" + it2.getIdMenu() + "' class='w3-card-12 ann_" + it.getIdAnnonce() + "' style='width:250px;height:300px;margin:5px;display:inline-block;' data-toggle='modal' data-target='#myModal'>");
                                     out.println("  <img src='imgs/steakdeviande-autres.jpg' alt='Menu' style='width:100%;height:auto;'>");
                                     out.println("  <div class='w3-container w3-center'>");
                                     out.println("    <p style='color:black;display: inline-block;'>" + it2.getNomMenu() + "</p>");
-                                    out.println(" <span class='label label-primary';display: inline-block;>" +" "+ it2.getPrixMenu() + " € " + "</span>");
+                                    out.println(" <span class='label label-primary';display: inline-block;>" + " " + it2.getPrixMenu() + " € " + "</span>");
                                     out.println("    <p style='color:black;'>" + it2.getDescriptionMenu() + "</p>");
-
-//                                out.println("<div>");
                                     out.println("<p style='color:black;'>Rating : <i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-half-o' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-o' aria-hidden='true' style='display: inline-block;'></i></p>");
-//                                out.println("</div>");
-                                    out.println("<button class='w3-btn w3-green' style='margin-bottom:5px;'> Reserver </button>");
+                                    out.println("<button class='w3-btn w3-green' style='margin-bottom:5px;' onClick='filterPlages(" + it.getIdAnnonce() + "," + it2.getIdMenu() + ")'> Reserver </button>");
                                     out.println("  </div>");
                                     out.println("</div>");
                                 }
@@ -98,10 +118,48 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="3b">
-                    <h3>We applied clearfix to the tab-content to rid of the gap between the tab and the content</h3>
+                    <div id="tabPanel" class="container">
+                        <div class="row">
+                            <div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]">
+                                <ul class="event-list">  
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="tab-pane" id="4b">
                     <h3>We use css to change the background color of the content to be equal to the tab</h3>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Veuillez choisir une plage horraire</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="list-group">
+                                <h3>Plages Disponibles:</h3>
+                                <%
+                                    List<Plage> listePlages = (List<Plage>) request.getAttribute("listePlage");
+                                    for (Plage it : listePlages) {
+                                        out.print("<button onClick='pushIdPlage(" + it.getIdPlage() + ")' class='plage_an" + it.getAnnonceIdAnnonce().getIdAnnonce() + " list-group-item' type='button'>" + it.getAnnee() + "-" + it.getMois() + "-" + it.getJour() + " || " + it.getHeure() + " || Pour :" + it.getNombrePlacesPlage() + " personnes </button>");
+                                    }
+                                %>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onClick="addToPanel()">Ajouter au panier</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

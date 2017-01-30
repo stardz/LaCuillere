@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,7 +5,7 @@
  */
 package Interfaces;
 
-import entities.Annonce;
+import entities.Menu;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -15,7 +14,7 @@ import javax.ejb.Local;
  * @author Ibra
  */
 @Local
-public interface AnnonceInterface {
-    public List<Annonce> getAllAnonces();
-    public Annonce getAnnonceById(int idAnnonce);
+public interface MenuInterfacel {
+    public List<Menu> getAllMenus();
+    public Menu getMenuById(int idMenu);
 }

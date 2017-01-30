@@ -5,13 +5,11 @@
  */
 package beans;
 
-import Interfaces.AnnonceInterface;
-import entities.Annonce;
-import entities.Utilisateur;
-import java.util.ArrayList;
+import javax.ejb.Stateless;
+import Interfaces.MenuInterfacel;
+import entities.Menu;
 import java.util.List;
 import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -21,23 +19,22 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 @LocalBean
-public class AnnonceBean implements AnnonceInterface {
+public class MenuBean implements MenuInterfacel {
 
     @PersistenceContext(unitName = "LaCuillere-ejbPU")
     private EntityManager em;
 
     @Override
-    public List<Annonce> getAllAnonces() {
-        List<Annonce> annonces=(List<Annonce>) em.createNamedQuery("Annonce.findAll").getResultList();
-        return annonces;
+    public List<Menu> getAllMenus() {
+        List<Menu> menus = (List<Menu>) em.createNamedQuery("Menu.findAll").getResultList();
+        return menus;
     }
-
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
     @Override
-    public Annonce getAnnonceById(int idAnnonce) {
-        Annonce a=(Annonce) em.createNamedQuery("Annonce.findByIdAnnonce").setParameter("idAnnonce", idAnnonce).getSingleResult();
+    public Menu getMenuById(int idMenu) {
+        Menu a=(Menu) em.createNamedQuery("Menu.findByIdMenu").setParameter("idMenu", idMenu).getSingleResult();
         return a;
     }
 }
