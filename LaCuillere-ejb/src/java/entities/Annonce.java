@@ -10,6 +10,7 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -63,7 +64,7 @@ public class Annonce implements Serializable {
         @JoinColumn(name = "utilisateur_id_utilisateur", referencedColumnName = "id_utilisateur")})
     @ManyToMany
     private Collection<Utilisateur> utilisateurCollection;
-    @OneToMany(mappedBy = "annonceIdAnnonce")
+    @OneToMany(mappedBy = "annonceIdAnnonce",fetch = FetchType.EAGER)
     private Collection<Menu> menuCollection;
     @OneToMany(mappedBy = "annonceIdAnnonce")
     private Collection<Plage> plageCollection;

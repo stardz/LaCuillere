@@ -37,7 +37,7 @@ public class servletGetMenu extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Menu> listM = new ArrayList<Menu>();
-        listM = mInterface.getMenuByIdRestaurateur(usr);
+//        listM = mInterface.getMenuByIdRestaurateur(usr);
         request.setAttribute("listM", listM);
     }
 

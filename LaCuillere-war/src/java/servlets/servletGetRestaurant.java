@@ -40,7 +40,7 @@ public class servletGetRestaurant extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         List<Restaurant> listR = new ArrayList<Restaurant>();
-        listR = rInterface.getRestaurantByIdRestaurateur(usr);
+//        listR = rInterface.getRestaurantByIdRestaurateur(usr);
         request.setAttribute("listR", listR);
     }
 

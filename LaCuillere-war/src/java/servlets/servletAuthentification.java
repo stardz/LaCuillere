@@ -5,6 +5,9 @@
  */
 package servlets;
 
+import Interfaces.AnnonceInterface;
+import Interfaces.MenuInterface;
+import Interfaces.PlageInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -13,7 +16,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Interfaces.UtilisateurInterface;
+import entities.Annonce;
+import entities.Menu;
+import entities.Plage;
 import entities.Utilisateur;
+import java.util.List;
 
 /**
  *
@@ -23,6 +30,10 @@ public class servletAuthentification extends HttpServlet {
 
     @EJB
     UtilisateurInterface comptesInterface;
+    @EJB
+    AnnonceInterface annonceInterface;
+    @EJB
+    PlageInterface plageInterface;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -63,22 +74,6 @@ public class servletAuthentification extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        Utilisateur usr = comptesInterface.getUser(request.getParameter("user"),request.getParameter("pass"));
-        //System.out.println(usr.getPasswordUser()); 
-        if (usr != null) {
-            if (usr.getPasswordUser() != null) {
-                if (usr.getProfileUsr().equals("CLT")) {
-                     response.sendRedirect("ClientHome.html");
-                }else{
-                    response.sendRedirect("RestaurateurHome.html"); 
-                }
-               
-            } else {
-                response.sendRedirect("Login.html");
-            }
-        } else {
-            response.sendRedirect("Login.html");
-        }
     }
 
     /**
@@ -92,7 +87,26 @@ public class servletAuthentification extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        List<Annonce> listeAnnonce = annonceInterface.getAllAnonces();
+        List<Plage> listePlage = plageInterface.getAllPlages();
+        Utilisateur usr = comptesInterface.getUser(request.getParameter("user"), request.getParameter("pass"));
+        //System.out.println(usr.getPasswordUser()); 
+        request.setAttribute("listeAnnonces", listeAnnonce);
+        request.setAttribute("listePlage", listePlage);
+        if (usr != null) {
+            if (usr.getPasswordUser() != null) {
+                if (usr.getProfileUsr().equals("CLT")) {
+                    getServletConfig().getServletContext().getRequestDispatcher("/ClientSpace.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("RestaurateurHome.html");
+                }
+
+            } else {
+                response.sendRedirect("Login.html");
+            }
+        } else {
+            response.sendRedirect("Login.html");
+        }
     }
 
     /**

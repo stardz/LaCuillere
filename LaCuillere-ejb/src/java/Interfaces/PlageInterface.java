@@ -6,11 +6,16 @@
 package Interfaces;
 
 import entities.Plage;
+import java.util.List;
+import javax.ejb.Local;
 
 /**
  *
- * @author dell
+ * @author Ibra
  */
+@Local
 public interface PlageInterface {
+    public List<Plage> getAllPlages();
+    public Plage getPlageById(int idPlage);
     public void ajouterPlage(Plage p);
 }
