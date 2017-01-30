@@ -13,34 +13,32 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ibra
+ * @author dell
  */
 @Entity
 @Table(name = "utilisateur")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u")
-    , @NamedQuery(name = "Utilisateur.findByIdUtilisateur", query = "SELECT u FROM Utilisateur u WHERE u.idUtilisateur = :idUtilisateur")
-    , @NamedQuery(name = "Utilisateur.findByAdressUsr", query = "SELECT u FROM Utilisateur u WHERE u.adressUsr = :adressUsr")
-    , @NamedQuery(name = "Utilisateur.findByMailUsr", query = "SELECT u FROM Utilisateur u WHERE u.mailUsr = :mailUsr")
-    , @NamedQuery(name = "Utilisateur.findByNomUsr", query = "SELECT u FROM Utilisateur u WHERE u.nomUsr = :nomUsr")
-    , @NamedQuery(name = "Utilisateur.findByPasswordUser", query = "SELECT u FROM Utilisateur u WHERE u.passwordUser = :passwordUser")
-    , @NamedQuery(name = "Utilisateur.findByPrenomUsr", query = "SELECT u FROM Utilisateur u WHERE u.prenomUsr = :prenomUsr")
-    , @NamedQuery(name = "Utilisateur.findByProfileUsr", query = "SELECT u FROM Utilisateur u WHERE u.profileUsr = :profileUsr")
-    , @NamedQuery(name = "Utilisateur.findByTelephoneUsr", query = "SELECT u FROM Utilisateur u WHERE u.telephoneUsr = :telephoneUsr")})
+    @NamedQuery(name = "Utilisateur.findAll", query = "SELECT u FROM Utilisateur u"),
+    @NamedQuery(name = "Utilisateur.findByIdUtilisateur", query = "SELECT u FROM Utilisateur u WHERE u.idUtilisateur = :idUtilisateur"),
+    @NamedQuery(name = "Utilisateur.findByAdressUsr", query = "SELECT u FROM Utilisateur u WHERE u.adressUsr = :adressUsr"),
+    @NamedQuery(name = "Utilisateur.findByMailUsr", query = "SELECT u FROM Utilisateur u WHERE u.mailUsr = :mailUsr"),
+    @NamedQuery(name = "Utilisateur.findByNomUsr", query = "SELECT u FROM Utilisateur u WHERE u.nomUsr = :nomUsr"),
+    @NamedQuery(name = "Utilisateur.findByPasswordUser", query = "SELECT u FROM Utilisateur u WHERE u.passwordUser = :passwordUser"),
+    @NamedQuery(name = "Utilisateur.findByPrenomUsr", query = "SELECT u FROM Utilisateur u WHERE u.prenomUsr = :prenomUsr"),
+    @NamedQuery(name = "Utilisateur.findByProfileUsr", query = "SELECT u FROM Utilisateur u WHERE u.profileUsr = :profileUsr"),
+    @NamedQuery(name = "Utilisateur.findByTelephoneUsr", query = "SELECT u FROM Utilisateur u WHERE u.telephoneUsr = :telephoneUsr")})
 public class Utilisateur implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,7 +46,7 @@ public class Utilisateur implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id_utilisateur")
-    private Long idUtilisateur;
+    private Integer idUtilisateur;
     @Size(max = 255)
     @Column(name = "adress_usr")
     private String adressUsr;
@@ -74,24 +72,25 @@ public class Utilisateur implements Serializable {
     private Collection<Plage> plageCollection;
     @ManyToMany(mappedBy = "utilisateurCollection")
     private Collection<Annonce> annonceCollection;
-    @JoinTable(name = "utilisateur_reservation", joinColumns = {
-        @JoinColumn(name = "utilisateur_id_utilisateur", referencedColumnName = "id_utilisateur")}, inverseJoinColumns = {
-        @JoinColumn(name = "reservations_id_reservation", referencedColumnName = "id_reservation")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "utilisateurCollection")
     private Collection<Reservation> reservationCollection;
+    @OneToMany(mappedBy = "restaurantIdUtilisateur")
+    private Collection<Restaurant> restaurantCollection;
+    @OneToMany(mappedBy = "menuIdUtilisateur")
+    private Collection<Menu> menuCollection;
 
     public Utilisateur() {
     }
 
-    public Utilisateur(Long idUtilisateur) {
+    public Utilisateur(Integer idUtilisateur) {
         this.idUtilisateur = idUtilisateur;
     }
 
-    public Long getIdUtilisateur() {
+    public Integer getIdUtilisateur() {
         return idUtilisateur;
     }
 
-    public void setIdUtilisateur(Long idUtilisateur) {
+    public void setIdUtilisateur(Integer idUtilisateur) {
         this.idUtilisateur = idUtilisateur;
     }
 
@@ -176,6 +175,24 @@ public class Utilisateur implements Serializable {
 
     public void setReservationCollection(Collection<Reservation> reservationCollection) {
         this.reservationCollection = reservationCollection;
+    }
+
+    @XmlTransient
+    public Collection<Restaurant> getRestaurantCollection() {
+        return restaurantCollection;
+    }
+
+    public void setRestaurantCollection(Collection<Restaurant> restaurantCollection) {
+        this.restaurantCollection = restaurantCollection;
+    }
+
+    @XmlTransient
+    public Collection<Menu> getMenuCollection() {
+        return menuCollection;
+    }
+
+    public void setMenuCollection(Collection<Menu> menuCollection) {
+        this.menuCollection = menuCollection;
     }
 
     @Override

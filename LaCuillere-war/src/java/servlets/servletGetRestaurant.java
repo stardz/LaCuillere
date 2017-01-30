@@ -5,10 +5,12 @@
  */
 package servlets;
 
-import Interfaces.UtilisateurInterface;
-import entities.Utilisateur;
+import Interfaces.RestaurantInterface;
+import entities.Restaurant;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,13 +19,14 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Ibra
+ * @author dell
  */
-public class servletEnregistrer extends HttpServlet {
+public class servletGetRestaurant extends HttpServlet {
 
-    @EJB
-    UtilisateurInterface comptesInterface;
-
+     @EJB
+      RestaurantInterface rInterface;
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,18 +39,9 @@ public class servletEnregistrer extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet servletEnregistrer</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet servletEnregistrer at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        List<Restaurant> listR = new ArrayList<Restaurant>();
+        listR = rInterface.getRestaurantByIdRestaurateur(usr);
+        request.setAttribute("listR", listR);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -62,20 +56,19 @@ public class servletEnregistrer extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Utilisateur u = new Utilisateur(new Integer("10"));
-        u.setNomUsr(request.getParameter("nom"));
-        u.setPrenomUsr(request.getParameter("prenom"));
-        u.setAdressUsr(request.getParameter("addresse") + ", " + request.getParameter("codePostale") + ", " + request.getParameter("ville"));
-        u.setTelephoneUsr(request.getParameter("telephone"));
-        u.setMailUsr(request.getParameter("mail"));
-        u.setPasswordUser(request.getParameter("pass"));
-        
-        if(request.getParameter("profile")==null){
-            u.setProfileUsr("CLT");
-        }else{
-            u.setProfileUsr("RST");
+        processRequest(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet servletGetRestaurant</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet servletGetRestaurant at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        comptesInterface.registerUser(u);
     }
 
     /**

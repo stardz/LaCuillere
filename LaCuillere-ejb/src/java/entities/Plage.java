@@ -24,19 +24,19 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ibra
+ * @author dell
  */
 @Entity
 @Table(name = "plage")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Plage.findAll", query = "SELECT p FROM Plage p")
-    , @NamedQuery(name = "Plage.findByIdPlage", query = "SELECT p FROM Plage p WHERE p.idPlage = :idPlage")
-    , @NamedQuery(name = "Plage.findByAnnee", query = "SELECT p FROM Plage p WHERE p.annee = :annee")
-    , @NamedQuery(name = "Plage.findByHeure", query = "SELECT p FROM Plage p WHERE p.heure = :heure")
-    , @NamedQuery(name = "Plage.findByJour", query = "SELECT p FROM Plage p WHERE p.jour = :jour")
-    , @NamedQuery(name = "Plage.findByMois", query = "SELECT p FROM Plage p WHERE p.mois = :mois")
-    , @NamedQuery(name = "Plage.findByNombrePlacesPlage", query = "SELECT p FROM Plage p WHERE p.nombrePlacesPlage = :nombrePlacesPlage")})
+    @NamedQuery(name = "Plage.findAll", query = "SELECT p FROM Plage p"),
+    @NamedQuery(name = "Plage.findByIdPlage", query = "SELECT p FROM Plage p WHERE p.idPlage = :idPlage"),
+    @NamedQuery(name = "Plage.findByAnnee", query = "SELECT p FROM Plage p WHERE p.annee = :annee"),
+    @NamedQuery(name = "Plage.findByHeure", query = "SELECT p FROM Plage p WHERE p.heure = :heure"),
+    @NamedQuery(name = "Plage.findByJour", query = "SELECT p FROM Plage p WHERE p.jour = :jour"),
+    @NamedQuery(name = "Plage.findByMois", query = "SELECT p FROM Plage p WHERE p.mois = :mois"),
+    @NamedQuery(name = "Plage.findByNombrePlacesPlage", query = "SELECT p FROM Plage p WHERE p.nombrePlacesPlage = :nombrePlacesPlage")})
 public class Plage implements Serializable {
 
     private static final long serialVersionUID = 1L;

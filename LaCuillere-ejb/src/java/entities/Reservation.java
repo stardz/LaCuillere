@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,15 +24,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ibra
+ * @author dell
  */
 @Entity
 @Table(name = "reservation")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Reservation.findAll", query = "SELECT r FROM Reservation r")
-    , @NamedQuery(name = "Reservation.findByIdReservation", query = "SELECT r FROM Reservation r WHERE r.idReservation = :idReservation")
-    , @NamedQuery(name = "Reservation.findByEtatReservation", query = "SELECT r FROM Reservation r WHERE r.etatReservation = :etatReservation")})
+    @NamedQuery(name = "Reservation.findAll", query = "SELECT r FROM Reservation r"),
+    @NamedQuery(name = "Reservation.findByIdReservation", query = "SELECT r FROM Reservation r WHERE r.idReservation = :idReservation"),
+    @NamedQuery(name = "Reservation.findByEtatReservation", query = "SELECT r FROM Reservation r WHERE r.etatReservation = :etatReservation")})
 public class Reservation implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,7 +50,10 @@ public class Reservation implements Serializable {
     private Collection<Menu> menuCollection;
     @ManyToMany(mappedBy = "reservationCollection")
     private Collection<Plage> plageCollection;
-    @ManyToMany(mappedBy = "reservationCollection")
+    @JoinTable(name = "utilisateur_reservation", joinColumns = {
+        @JoinColumn(name = "reservations_id_reservation", referencedColumnName = "id_reservation")}, inverseJoinColumns = {
+        @JoinColumn(name = "utilisateur_id_utilisateur", referencedColumnName = "id_utilisateur")})
+    @ManyToMany
     private Collection<Utilisateur> utilisateurCollection;
 
     public Reservation() {

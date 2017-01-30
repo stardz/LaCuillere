@@ -25,15 +25,17 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ibra
+ * @author dell
  */
 @Entity
 @Table(name = "annonce")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Annonce.findAll", query = "SELECT a FROM Annonce a")
-    , @NamedQuery(name = "Annonce.findByIdAnnonce", query = "SELECT a FROM Annonce a WHERE a.idAnnonce = :idAnnonce")
-    , @NamedQuery(name = "Annonce.findByDescriptionAnnonce", query = "SELECT a FROM Annonce a WHERE a.descriptionAnnonce = :descriptionAnnonce")})
+    @NamedQuery(name = "Annonce.findAll", query = "SELECT a FROM Annonce a"),
+    @NamedQuery(name = "Annonce.findByIdAnnonce", query = "SELECT a FROM Annonce a WHERE a.idAnnonce = :idAnnonce"),
+    @NamedQuery(name = "Annonce.findByDescriptionAnnonce", query = "SELECT a FROM Annonce a WHERE a.descriptionAnnonce = :descriptionAnnonce"),
+    @NamedQuery(name = "Annonce.findByTeleAnnonce", query = "SELECT a FROM Annonce a WHERE a.teleAnnonce = :teleAnnonce"),
+    @NamedQuery(name = "Annonce.findByEmailAnnonce", query = "SELECT a FROM Annonce a WHERE a.emailAnnonce = :emailAnnonce")})
 public class Annonce implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,6 +47,12 @@ public class Annonce implements Serializable {
     @Size(max = 255)
     @Column(name = "description_annonce")
     private String descriptionAnnonce;
+    @Size(max = 50)
+    @Column(name = "tele_annonce")
+    private String teleAnnonce;
+    @Size(max = 50)
+    @Column(name = "email_annonce")
+    private String emailAnnonce;
     @JoinTable(name = "restaurant_annonce", joinColumns = {
         @JoinColumn(name = "annonces_id_annonce", referencedColumnName = "id_annonce")}, inverseJoinColumns = {
         @JoinColumn(name = "restaurant_id_restaurant", referencedColumnName = "id_restaurant")})
@@ -81,6 +89,22 @@ public class Annonce implements Serializable {
 
     public void setDescriptionAnnonce(String descriptionAnnonce) {
         this.descriptionAnnonce = descriptionAnnonce;
+    }
+
+    public String getTeleAnnonce() {
+        return teleAnnonce;
+    }
+
+    public void setTeleAnnonce(String teleAnnonce) {
+        this.teleAnnonce = teleAnnonce;
+    }
+
+    public String getEmailAnnonce() {
+        return emailAnnonce;
+    }
+
+    public void setEmailAnnonce(String emailAnnonce) {
+        this.emailAnnonce = emailAnnonce;
     }
 
     @XmlTransient

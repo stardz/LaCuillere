@@ -25,14 +25,14 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ibra
+ * @author dell
  */
 @Entity
 @Table(name = "date")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Date.findAll", query = "SELECT d FROM Date d")
-    , @NamedQuery(name = "Date.findByDateDate", query = "SELECT d FROM Date d WHERE d.dateDate = :dateDate")})
+    @NamedQuery(name = "Date.findAll", query = "SELECT d FROM Date d"),
+    @NamedQuery(name = "Date.findByDateDate", query = "SELECT d FROM Date d WHERE d.dateDate = :dateDate")})
 public class Date implements Serializable {
 
     private static final long serialVersionUID = 1L;

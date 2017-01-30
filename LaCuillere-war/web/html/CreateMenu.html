@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>CreateMenu</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="head">
+           <h1>Create a new menu</h1> 
+        </div>
+        
+        <div class="corp">
+            <p>Please fill in the form (* is required) </p>
+            <form action="servletCreateMenu" method="post">
+            <table border="0">
+                <tr>
+                    <td>Name*</td>
+                    <td><input type="text" name="nomMenu" required="required" /></td>
+                </tr>
+                <tr>
+                    <td>Price*</td>
+                    <td><input type="text" name="prixMenu" required="required" ></td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td><input type="text" name="descriptionMenu" /></td>
+                </tr>
+            </table>
+             <br/>
+                <input type="submit" value="Submit" />
+                <input type="reset" value="Reset" />
+        </form>
+        </div>
+        
+        <div class="foot">
+            Thanks for visiting our web site!
+        </div>
+    </body>
+</html>

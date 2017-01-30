@@ -26,17 +26,17 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ibra
+ * @author dell
  */
 @Entity
 @Table(name = "menu")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Menu.findAll", query = "SELECT m FROM Menu m")
-    , @NamedQuery(name = "Menu.findByIdMenu", query = "SELECT m FROM Menu m WHERE m.idMenu = :idMenu")
-    , @NamedQuery(name = "Menu.findByDescriptionMenu", query = "SELECT m FROM Menu m WHERE m.descriptionMenu = :descriptionMenu")
-    , @NamedQuery(name = "Menu.findByNomMenu", query = "SELECT m FROM Menu m WHERE m.nomMenu = :nomMenu")
-    , @NamedQuery(name = "Menu.findByPrixMenu", query = "SELECT m FROM Menu m WHERE m.prixMenu = :prixMenu")})
+    @NamedQuery(name = "Menu.findAll", query = "SELECT m FROM Menu m"),
+    @NamedQuery(name = "Menu.findByIdMenu", query = "SELECT m FROM Menu m WHERE m.idMenu = :idMenu"),
+    @NamedQuery(name = "Menu.findByDescriptionMenu", query = "SELECT m FROM Menu m WHERE m.descriptionMenu = :descriptionMenu"),
+    @NamedQuery(name = "Menu.findByNomMenu", query = "SELECT m FROM Menu m WHERE m.nomMenu = :nomMenu"),
+    @NamedQuery(name = "Menu.findByPrixMenu", query = "SELECT m FROM Menu m WHERE m.prixMenu = :prixMenu")})
 public class Menu implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,6 +61,9 @@ public class Menu implements Serializable {
     @JoinColumn(name = "annonce_id_annonce", referencedColumnName = "id_annonce")
     @ManyToOne
     private Annonce annonceIdAnnonce;
+    @JoinColumn(name = "menu_id_utilisateur", referencedColumnName = "id_utilisateur")
+    @ManyToOne
+    private Utilisateur menuIdUtilisateur;
 
     public Menu() {
     }
@@ -116,6 +119,14 @@ public class Menu implements Serializable {
 
     public void setAnnonceIdAnnonce(Annonce annonceIdAnnonce) {
         this.annonceIdAnnonce = annonceIdAnnonce;
+    }
+
+    public Utilisateur getMenuIdUtilisateur() {
+        return menuIdUtilisateur;
+    }
+
+    public void setMenuIdUtilisateur(Utilisateur menuIdUtilisateur) {
+        this.menuIdUtilisateur = menuIdUtilisateur;
     }
 
     @Override
