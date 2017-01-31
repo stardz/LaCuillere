@@ -7,11 +7,13 @@ package Interfaces;
 
 import entities.Categorie;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
  *
  * @author dell
  */
+@Local
 public interface CategorieInterface {
      public List<Categorie> getCate();
      public Categorie getCateById(Integer id_cate);

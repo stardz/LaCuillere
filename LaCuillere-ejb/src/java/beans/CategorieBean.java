@@ -8,7 +8,6 @@ package beans;
 import Interfaces.CategorieInterface;
 import entities.Categorie;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -29,7 +28,6 @@ public class CategorieBean implements CategorieInterface{
     
     @Override
     public List<Categorie> getCate(){
-        System.out.print("======================================================");
         List<Categorie> listC = new ArrayList<Categorie>();       
         Query query = em.createNamedQuery("Categorie.findAll");
         listC = query.getResultList();

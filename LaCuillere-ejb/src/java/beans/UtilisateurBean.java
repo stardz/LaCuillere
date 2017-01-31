@@ -33,7 +33,9 @@ public class UtilisateurBean implements UtilisateurInterface {
         u.setPasswordUser("test");
         return u;*/
         List<Utilisateur> usrs=em.createNamedQuery("Utilisateur.findByNomUsr").setParameter("nomUsr", login).getResultList();
-        
+        u = usrs.get(0);
+        return u;
+        /*
         try {
             u= usrs.get(usrs.size()-1);
             if(!u.getPasswordUser().equals(pass))return null;
@@ -42,6 +44,7 @@ public class UtilisateurBean implements UtilisateurInterface {
         } catch (Exception e) {
             return null;
         }
+*/
     }
 
     // Add business logic below. (Right-click in editor and choose

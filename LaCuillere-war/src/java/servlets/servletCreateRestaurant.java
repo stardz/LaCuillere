@@ -7,8 +7,10 @@ package servlets;
 
 import Interfaces.CategorieInterface;
 import Interfaces.RestaurantInterface;
+import Interfaces.UtilisateurInterface;
 import entities.Categorie;
 import entities.Restaurant;
+import entities.Utilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -27,7 +29,10 @@ public class servletCreateRestaurant extends HttpServlet {
 
     @EJB
   RestaurantInterface rInterface;  
+    @EJB
   CategorieInterface cateInterface;
+    @EJB
+  UtilisateurInterface uInterface;
   
   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -46,39 +51,58 @@ public class servletCreateRestaurant extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        
        String nomRes = request.getParameter("nomRes");
        String adressRes = request.getParameter("adressRes");
        String teleRes = request.getParameter("teleRes");
        String emailRes = request.getParameter("emailRes");
-       String[] categorieRes = request.getParameterValues("categorieRes");
        
-       List<Categorie> listcate = new ArrayList<Categorie>();    
+      
+   
 
        Restaurant r = new Restaurant(new Long("27"));
        r.setNomRes(nomRes);
        r.setTeleRes(teleRes);
        r.setEmailRes(emailRes);
        r.setAdresseRes(adressRes);
-       r.setCategorieCollection(listcate);   
        
-       /* il faut le session qui a l'id de restaurateur
-       r.setRestaurantIdUtilisateur(restaurantIdUtilisateur);
- */
+       Utilisateur usr = uInterface.getUser("FANG", "123");
+       r.setRestaurantIdUtilisateur(usr);
+       
+       List<Categorie> listcate = new ArrayList<Categorie>(); 
+       if(request.getParameterValues("categorieRes")!=null){
+       String[] categorieRes = request.getParameterValues("categorieRes");
        for(int i = 0; i < categorieRes.length; i++){
-           Categorie c = new Categorie();
-           c = cateInterface.getCateById(new Integer(categorieRes[i]));
+           Categorie c = cateInterface.getCateById(new Integer(categorieRes[i]));
            listcate.add(c);
            c.getRestaurantCollection().add(r);
        }
-       
+       }
+       r.setCategorieCollection(listcate);    
        rInterface.ajouterRestaurant(r);
-             
+           
+       
+       try {
+            out.println("<!DOCTYPE html>");
+            out.println("<html><head>");
+            out.println("<title>CreateMenu</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Save your restaurant successfully!</h1>");
+            out.println("</body></html>");
+            out.close();
+        }finally{
+            out.close();
+        }
     }
 
 
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

@@ -6,10 +6,10 @@
 package servlets;
 
 import Interfaces.RestaurantInterface;
+import Interfaces.UtilisateurInterface;
 import entities.Restaurant;
+import entities.Utilisateur;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -25,64 +25,30 @@ public class servletGetRestaurant extends HttpServlet {
 
      @EJB
       RestaurantInterface rInterface;
+    @EJB
+      UtilisateurInterface uInterface;
     
-    
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        List<Restaurant> listR = new ArrayList<Restaurant>();
-//        listR = rInterface.getRestaurantByIdRestaurateur(usr);
-        request.setAttribute("listR", listR);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet servletGetRestaurant</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet servletGetRestaurant at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+            Utilisateur usr = uInterface.getUser("FANG", "123");
+            List<Restaurant> listRes = rInterface.getRestaurantByIdRestaurateur(usr);          
+            response.getWriter().write("<td> Choose your restaurant : </td><td><select name='annonceIdRes'>");
+            for(Restaurant r: listRes){
+                response.getWriter().write("<option value ='"+r.getIdRestaurant() +"'>"+  r.getNomRes() +"</option>");
+            }     
+            response.getWriter().write("</select></td>");
     }
 
     /**

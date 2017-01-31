@@ -6,7 +6,9 @@
 package servlets;
 
 import Interfaces.MenuInterface;
+import Interfaces.UtilisateurInterface;
 import entities.Menu;
+import entities.Utilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
@@ -24,7 +26,9 @@ public class servletCreateMenu extends HttpServlet {
     
     @EJB
      MenuInterface mInterface;
-
+    @EJB
+     UtilisateurInterface uInterface;
+     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -43,19 +47,35 @@ public class servletCreateMenu extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        
         String nomMenu = request.getParameter("nomMenu");
         String prixMenu = request.getParameter("prixMenu");
         String descriptionMenu = request.getParameter("descriptionMenu");
         
-        
+      
         Menu m = new Menu(new Long("27"));
+ 
         m.setNomMenu(nomMenu);
         m.setPrixMenu(new BigInteger(prixMenu));
-     
-     /*   il faut le session qui a l'id de restaurateur
-        m.setMenuIdUtilisateur(menuIdUtilisateur);
-     */   
+        m.setDescriptionMenu(descriptionMenu);
+
+        Utilisateur usr = uInterface.getUser("FANG", "123");
+        m.setMenuIdUtilisateur(usr);
         mInterface.ajouterMenu(m);
+        try {
+            out.println("<!DOCTYPE html>");
+            out.println("<html><head>");
+            out.println("<title>CreateMenu</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Save your menu successfully!</h1>");
+            out.println("</body></html>");
+            out.close();
+        }finally{
+            out.close();
+        }
     }
 
     /**

@@ -8,11 +8,13 @@ package Interfaces;
 import entities.Restaurant;
 import entities.Utilisateur;
 import java.util.List;
+import javax.ejb.Local;
 
 /**
  *
  * @author dell
  */
+@Local
 public interface RestaurantInterface {
     public void ajouterRestaurant(Restaurant r);
     public List<Restaurant> getRestaurantByIdRestaurateur(Utilisateur u);

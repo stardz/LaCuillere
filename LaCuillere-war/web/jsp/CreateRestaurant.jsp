@@ -44,13 +44,11 @@
                     <td><input type="text" name="emailRes" /></td>
                 </tr>
                 <tr id="listCate"> 
-
-                <script>
-                    
+                <script>                  
                     $.post("servletGetCategorie", function (response) {
-                    alert(response.toString()); });                 
-                </script>
-                   
+                        $('#listCate').append(response.toString());
+                });  
+                </script>                  
                 </tr>
             </table>
              <br/>
