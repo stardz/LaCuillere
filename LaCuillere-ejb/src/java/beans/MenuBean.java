@@ -33,7 +33,7 @@ public class MenuBean implements MenuInterface{
     }
     
     @Override
-    public List<Menu> getMenuByIdRestaurateur(Utilisateur u){
+    public List<Menu> getMenuByIdRestaurateur(int u){
         List<Menu> listM = new ArrayList<Menu>();
         Query query = em.createNamedQuery("Menu.findByIdRestaurateur");
         listM = query.setParameter("menuRestaurateur", u).getResultList();

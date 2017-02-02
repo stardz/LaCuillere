@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -23,11 +24,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class servletGetRestaurant extends HttpServlet {
 
-     @EJB
-      RestaurantInterface rInterface;
     @EJB
-      UtilisateurInterface uInterface;
-    
+    RestaurantInterface rInterface;
+    @EJB
+    UtilisateurInterface uInterface;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -38,17 +39,18 @@ public class servletGetRestaurant extends HttpServlet {
             throws ServletException, IOException {
     }
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            Utilisateur usr = uInterface.getUser("FANG", "123");
-            List<Restaurant> listRes = rInterface.getRestaurantByIdRestaurateur(usr);          
-            response.getWriter().write("<td> Choose your restaurant : </td><td><select name='annonceIdRes'>");
-            for(Restaurant r: listRes){
-                response.getWriter().write("<option value ='"+r.getIdRestaurant() +"'>"+  r.getNomRes() +"</option>");
-            }     
-            response.getWriter().write("</select></td>");
+        HttpSession session = request.getSession();
+        Utilisateur usr = (Utilisateur) session.getAttribute("user");
+//        Utilisateur usr = uInterface.getUser("FANG", "123");
+        List<Restaurant> listRes = rInterface.getRestaurantByIdRestaurateur(usr);
+        response.getWriter().write("<td> Choose your restaurant : </td><td><select name='annonceIdRes'>");
+        for (Restaurant r : listRes) {
+            response.getWriter().write("<option value ='" + r.getIdRestaurant() + "'>" + r.getNomRes() + "</option>");
+        }
+        response.getWriter().write("</select></td>");
     }
 
     /**

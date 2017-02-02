@@ -45,7 +45,7 @@
                 </tr>
                 <tr id="listCate"> 
                 <script>                  
-                    $.post("servletGetCategorie", function (response) {
+                    $.post("../servletGetCategorie", function (response) {
                         $('#listCate').append(response.toString());
                 });  
                 </script>                  

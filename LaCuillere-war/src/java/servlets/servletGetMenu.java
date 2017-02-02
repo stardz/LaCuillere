@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -43,8 +44,10 @@ public class servletGetMenu extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Utilisateur usr = uInterface.getUser("FANG", "123");
-        List<Menu> listMenu = mInterface.getMenuByIdRestaurateur(usr);       
+        HttpSession session = request.getSession();
+        Utilisateur usr = (Utilisateur) session.getAttribute("user");
+        List<Menu> listMenu = mInterface.getMenuByIdRestaurateur(usr.getIdUtilisateur());
+        System.out.println("===================="+listMenu.toString()+"===============");
         response.getWriter().write("<td> Choose your menu</td>");
             for(Menu m: listMenu){
                 response.getWriter().write("<td><input type='checkbox' name='MenuList' value='"+m.getIdMenu()+"'/>"+m.getNomMenu()+"</td>");

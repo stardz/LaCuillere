@@ -5,8 +5,10 @@
  */
 package servlets;
 
+import Interfaces.AnnonceInterface;
 import Interfaces.MenuInterface;
 import Interfaces.UtilisateurInterface;
+import entities.Annonce;
 import entities.Menu;
 import entities.Utilisateur;
 import java.io.IOException;
@@ -17,18 +19,21 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author dell
  */
 public class servletCreateMenu extends HttpServlet {
-    
+
     @EJB
-     MenuInterface mInterface;
+    MenuInterface mInterface;
     @EJB
-     UtilisateurInterface uInterface;
-     
+    UtilisateurInterface uInterface;
+    @EJB
+    AnnonceInterface annonceInterface;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -36,44 +41,45 @@ public class servletCreateMenu extends HttpServlet {
         }
     }
 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+
         String nomMenu = request.getParameter("nomMenu");
         String prixMenu = request.getParameter("prixMenu");
         String descriptionMenu = request.getParameter("descriptionMenu");
-        
-      
-        Menu m = new Menu(new Long("27"));
- 
+
+        Menu m = new Menu();
+
         m.setNomMenu(nomMenu);
         m.setPrixMenu(new BigInteger(prixMenu));
         m.setDescriptionMenu(descriptionMenu);
-
-        Utilisateur usr = uInterface.getUser("FANG", "123");
+        m.setAnnonceIdAnnonce(annonceInterface.getAnnonceById(1));
+        HttpSession session = request.getSession();
+        Utilisateur usr = (Utilisateur) session.getAttribute("user");
+        
+//       Utilisateur usr = uInterface.getUser("FANG", "123");
         m.setMenuIdUtilisateur(usr);
+
         mInterface.ajouterMenu(m);
         try {
             out.println("<!DOCTYPE html>");
             out.println("<html><head>");
-            out.println("<title>CreateMenu</title>");            
+            out.println("<title>CreateMenu</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Save your menu successfully!</h1>");
             out.println("</body></html>");
             out.close();
-        }finally{
+        } finally {
             out.close();
         }
     }
