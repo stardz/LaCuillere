@@ -25,4 +25,5 @@ public interface MenuInterface {
     public Menu getMenuById(Long idMenu);
     public List<Menu> getAllMenus();
     public Menu getMenuById(int idMenu);
+       public List<Menu> getMenuByUser(int idUser);
 }

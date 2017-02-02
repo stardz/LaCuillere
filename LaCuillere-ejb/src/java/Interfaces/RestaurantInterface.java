@@ -20,4 +20,5 @@ public interface RestaurantInterface {
     public void ajouterRestaurant(Restaurant r);
     public List<Restaurant> getRestaurantByIdRestaurateur(Utilisateur u);
     public Restaurant getRestaurantById(Long idRestaurant);
+      public List<Restaurant> getRestaurantByUser(int idUser);
 }

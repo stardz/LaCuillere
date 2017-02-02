@@ -94,11 +94,15 @@ public class servletAuthentification extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Annonce> listeAnnonce = annonceInterface.getAllAnonces();
+      
         List<Plage> listePlage = plageInterface.getAllPlages();
-         List<Restaurant> listeRestaurants = restaurantInterface.getAllRestaurants();
-          List<Menu> listeMenu = menuInterface.getAllAnonces();
-        Utilisateur usr = comptesInterface.getUser(request.getParameter("user"), request.getParameter("pass"));
+        HttpSession session=request.getSession();
+        //Utilisateur user=(Utilisateur)session.getAttribute("user");
+           Utilisateur usr = comptesInterface.getUser(request.getParameter("user"), request.getParameter("pass"));
+         List<Restaurant> listeRestaurants = restaurantInterface.getRestaurantByUser(usr.getIdUtilisateur());
+          List<Menu> listeMenu = menuInterface.getMenuByUser(usr.getIdUtilisateur());
+            List<Annonce> listeAnnonce = annonceInterface.getAllAnonces();
+     
         //System.out.println(usr.getPasswordUser());
        request.setAttribute("listeRestaurants", listeRestaurants);
         request.setAttribute("listeAnnonces", listeAnnonce);

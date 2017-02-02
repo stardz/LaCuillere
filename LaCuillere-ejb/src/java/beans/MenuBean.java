@@ -70,5 +70,10 @@ public class MenuBean implements MenuInterface{
         List<Menu> menus=(List<Menu>) em.createNamedQuery("Menu.findAll").getResultList();
         return menus;
     }
-    
+  
+            @Override
+    public List<Menu> getMenuByUser(int idUser) {
+        List<Menu> menus= (List<Menu>) em.createNamedQuery("Menu.findByUser").setParameter("idUser", idUser).getResultList();
+        return menus;
+    }
 }

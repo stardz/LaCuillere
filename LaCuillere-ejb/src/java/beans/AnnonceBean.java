@@ -46,4 +46,9 @@ public class AnnonceBean implements AnnonceInterface {
     public void ajouterAnnonce(Annonce a){
         em.persist(a);
     }
+    /*  @Override
+      public List<Annonce> getAnnonceByUser(int idUser){
+      List<Annonce> annonces= (List<Annonce>) em.createNamedQuery("Annonce.findByUser").setParameter("idUser", idUser).getResultList();
+      return annonces;
+      }*/
 }

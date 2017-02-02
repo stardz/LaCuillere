@@ -46,9 +46,15 @@ public class RestaurantBean implements RestaurantInterface{
     }
         @Override
     public List<Restaurant> getAllRestaurants() {
+        
         List<Restaurant> restaurants=(List<Restaurant>) em.createNamedQuery("Restaurant.findAll").getResultList();
         return restaurants;
     }
     
+        @Override
+    public List<Restaurant> getRestaurantByUser(int idUser) {
+        List<Restaurant> restaurants = (List<Restaurant>) em.createNamedQuery("Restaurant.findByUser").setParameter("idUser", idUser).getResultList();
+        return restaurants;
+    }
     
 }
