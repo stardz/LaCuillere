@@ -5,9 +5,11 @@
  */
 package servlets;
 
-import Interfaces.AnnonceInterface;
-import Interfaces.MenuInterface;
-import Interfaces.PlageInterface;
+import Interfaces.ReservationInterface;
+import entities.Menu;
+import entities.Plage;
+import entities.Reservation;
+import entities.Utilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -15,27 +17,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Interfaces.UtilisateurInterface;
-import entities.Annonce;
-import entities.Menu;
-import entities.Plage;
-import entities.Utilisateur;
-import java.util.List;
 import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Ibra
  */
-public class servletAuthentification extends HttpServlet {
+public class servletRefreshReservation extends HttpServlet {
 
     @EJB
-    UtilisateurInterface comptesInterface;
-    @EJB
-    AnnonceInterface annonceInterface;
-    @EJB
-    PlageInterface plageInterface;
-    
+    ReservationInterface reservationInterface;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -53,10 +45,10 @@ public class servletAuthentification extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet servletAuthentification</title>");
+            out.println("<title>Servlet servletRefreshReservation</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet servletAuthentification at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet servletRefreshReservation at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -74,7 +66,7 @@ public class servletAuthentification extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        processRequest(request, response);
     }
 
     /**
@@ -88,30 +80,18 @@ public class servletAuthentification extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Annonce> listeAnnonce = annonceInterface.getAllAnonces();
-        List<Plage> listePlage = plageInterface.getAllPlages();
-        Utilisateur usr = comptesInterface.getUser(request.getParameter("user"), request.getParameter("pass"));
-        /* Création ou récupération de la session */
-        HttpSession session = request.getSession();
-        
-        session.setAttribute("user", usr);
-        System.out.println(((Utilisateur)session.getAttribute("user")).getNomUsr());
-        
-        request.setAttribute("listeAnnonces", listeAnnonce);
-        request.setAttribute("listePlage", listePlage);
-        if (usr != null) {
-            if (usr.getPasswordUser() != null) {
-                if (usr.getProfileUsr().equals("CLT")) {
-                    getServletConfig().getServletContext().getRequestDispatcher("/ClientSpace.jsp").forward(request, response);
-                } else {
-                    response.sendRedirect("RestaurateurHome.html");
-                }
-
-            } else {
-                response.sendRedirect("Login.html");
-            }
-        } else {
-            response.sendRedirect("Login.html");
+        HttpSession session=request.getSession();
+        Utilisateur usr=(Utilisateur)session.getAttribute("user");
+        System.out.println("=========================="+usr.getAdressUsr());
+        for (Reservation r : reservationInterface.getReservationByUser(usr.getIdUtilisateur())) {
+            response.getWriter().write("<tr>");
+            response.getWriter().write("<td>"+r.getIdReservation()+"</td>");
+            response.getWriter().write("<td>"+((Plage)r.getPlageCollection().toArray()[0]).getJour()+"</td>");
+            response.getWriter().write("<td>"+((Menu)r.getMenuCollection().toArray()[0]).getNomMenu()+"</td>");
+            response.getWriter().write("<td>"+r.getMenuCollection().size()+"</td>");
+            response.getWriter().write("<td>"+r.getMenuCollection().size()+" Eu </td>");
+            response.getWriter().write("<td class='text-center'><a class='btn btn-info btn-xs' href='#'><span class='glyphicon glyphicon-edit'></span> Modifier</a> <a href='#' class='btn btn-danger btn-xs'><span class='glyphicon glyphicon-remove'></span> Supprimer</a></td>");
+            response.getWriter().write("</tr>");
         }
     }
 

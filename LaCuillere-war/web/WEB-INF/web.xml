@@ -40,6 +40,14 @@
         <servlet-name>servletGetRestaurant</servlet-name>
         <servlet-class>servlets.servletGetRestaurant</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletCreateReservation</servlet-name>
+        <servlet-class>servlets.servletCreateReservation</servlet-class>
+    </servlet>
+     <servlet>
+        <servlet-name>servletRefreshReservation</servlet-name>
+        <servlet-class>servlets.servletRefreshReservation</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>authentificationServlet</servlet-name>
         <url-pattern>/authentificationServlet</url-pattern>
@@ -80,12 +88,20 @@
         <servlet-name>servletGetRestaurant</servlet-name>
         <url-pattern>/servletGetRestaurant</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletCreateReservation</servlet-name>
+        <url-pattern>/servletCreateReservation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletRefreshReservation</servlet-name>
+        <url-pattern>/servletRefreshReservation</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>jsp/CreateAnnonce.jsp</welcome-file>
+        <welcome-file>Login.html</welcome-file>
     </welcome-file-list>
 </web-app>

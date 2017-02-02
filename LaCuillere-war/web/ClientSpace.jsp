@@ -26,9 +26,11 @@
         <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
         <title>Client Space</title>
         <script>
+            refreshReservations();
             var annonce;
             var menu;
             var plage;
+
             function filterMenus(idAnnonce) {
                 $("div[class*='ann']").hide();
                 $('.ann_' + idAnnonce).show();
@@ -45,7 +47,7 @@
                 idPlage = idP;
             }
             function addToPanel() {
-                alert(annonce + '-' + menu + '-' + idPlage);
+//                alert(annonce + '-' + menu + '-' + idPlage);
                 var params = {
                     menu: menu,
                     idPlage: idPlage
@@ -53,11 +55,44 @@
 
                 $.post("servletPanel", $.param(params), function (response) {
                     $('.event-list').append(response.toString());
+                    var total = 0;
+                    $(".prixpart").each(function () {
+                        total += parseInt($(this).text());
+                    });
+                    $("#total_screen").text(total);
+                });
+
+            }
+            function validerPanier() {
+                var arr = new Array();
+                var items = Array.from(document.querySelectorAll('.ids_res'));
+                for (var i = 0; i < items.length; ++i) {
+                    arr.push(items[i].id.toString());
+                }
+                var params2 = {
+                    ids: arr.toString()
+                };
+//              
+                console.log(params2.ids.toString());
+                $.post("servletCreateReservation", $.param(params2), function (response) {
+                    $('#tab4').tab('show');
+                });
+                refreshReservations();
+                $('.event-list').empty();
+                $("#total_screen").text("0");
+                
+            }
+            function refreshReservations() {
+                $.post("servletRefreshReservation", function (response) {
+                    $('.table>tr').empty();
+                    $('.custab').append(response.toString());
                 });
             }
+
         </script>
     </head>
     <body>
+
         <%@ include file="Header.html" %>
         <div class="container"><h2>Bienvenue sur La Cuillere :) </h2></div>
         <div id="exTab3" class="container">	
@@ -69,7 +104,7 @@
                 </li>
                 <li><a id="tab3" href="#3b" data-toggle="tab">Mon Panier</a>
                 </li>
-                <li><a id="tab4" href="#4a" data-toggle="tab">Mes réservations</a>
+                <li><a id="tab4" href="#4b" data-toggle="tab">Mes réservations</a>
                 </li>
             </ul>
 
@@ -121,15 +156,67 @@
                     <div id="tabPanel" class="container">
                         <div class="row">
                             <div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]">
-                                <ul class="event-list">  
-                                    
+
+                                <ul class="event-list" id="panel_lis" style="width: 75%;display: inline-block;">  
+
                                 </ul>
+                                <div class="col-sm-3 col-md-3 col-xs-12" style="display: inline-block;">
+                                    <div class="box-1 center">
+                                        <div class="panel panel-success panel-pricing">
+                                            <div class="panel-heading">
+                                                <h3>Total</h3>
+                                            </div>
+                                            <div class="panel-body text-center">
+                                                <p><strong id="total_screen">0</strong></p>
+                                            </div>
+                                            <ul class="list-group text-center">
+                                                <li class="list-group-item"><strong>€</strong></li>
+                                            </ul>
+                                            <div class="panel-footer"> <a class="btn btn-lg btn-block btn-success"  onClick="validerPanier()">Valider !</a> </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="tab-pane" id="4b">
-                    <h3>We use css to change the background color of the content to be equal to the tab</h3>
+                    <div class="container">
+                        <div class="row col-md-12  custyle">
+                            <table class="table table-striped custab">
+                                <thead>
+                                    <!--                                <a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>-->
+                                    <tr>
+                                        <th>Numéro de réservation</th>
+                                        <th>Date de réservation</th>
+                                        <th>Restaurant</th>
+                                        <th>Nombre de menus</th>
+                                        <th>Prix Total</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <!--                                                            <tr>
+                                                                                                    <td>1</td>
+                                                                                                    <td>News</td>
+                                                                                                    <td>News Cate</td>
+                                                                                                    <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>2</td>
+                                                                                                    <td>Products</td>
+                                                                                                    <td>Main Products</td>
+                                                                                                    <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td>3</td>
+                                                                                                    <td>Blogs</td>
+                                                                                                    <td>Parent Blogs</td>
+                                                                                                    <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
+                                                                                                </tr>-->
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Modal -->

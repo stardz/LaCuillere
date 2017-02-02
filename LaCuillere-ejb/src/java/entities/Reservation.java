@@ -8,8 +8,12 @@ package entities;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -30,30 +34,34 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "reservation")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Reservation.findAll", query = "SELECT r FROM Reservation r"),
-    @NamedQuery(name = "Reservation.findByIdReservation", query = "SELECT r FROM Reservation r WHERE r.idReservation = :idReservation"),
-    @NamedQuery(name = "Reservation.findByEtatReservation", query = "SELECT r FROM Reservation r WHERE r.etatReservation = :etatReservation")})
+    @NamedQuery(name = "Reservation.findAll", query = "SELECT r FROM Reservation r")
+    ,
+    @NamedQuery(name = "Reservation.findByIdReservation", query = "SELECT r FROM Reservation r WHERE r.idReservation = :idReservation")
+    ,
+    @NamedQuery(name = "Reservation.findByEtatReservation", query = "SELECT r FROM Reservation r WHERE r.etatReservation = :etatReservation")
+    ,
+    @NamedQuery(name = "Reservation.findByUserReservation", query = "select r from Reservation r left join Utilisateur u where u.idUtilisateur = :idUser")})
 public class Reservation implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_reservation")
     private Long idReservation;
     @Size(max = 255)
     @Column(name = "etat_reservation")
     private String etatReservation;
-    @ManyToMany(mappedBy = "reservationCollection")
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Collection<Date> dateCollection;
-    @ManyToMany(mappedBy = "reservationCollection")
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Menu> menuCollection;
-    @ManyToMany(mappedBy = "reservationCollection")
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Plage> plageCollection;
     @JoinTable(name = "utilisateur_reservation", joinColumns = {
         @JoinColumn(name = "reservations_id_reservation", referencedColumnName = "id_reservation")}, inverseJoinColumns = {
         @JoinColumn(name = "utilisateur_id_utilisateur", referencedColumnName = "id_utilisateur")})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Utilisateur> utilisateurCollection;
 
     public Reservation() {
@@ -139,5 +147,5 @@ public class Reservation implements Serializable {
     public String toString() {
         return "entities.Reservation[ idReservation=" + idReservation + " ]";
     }
-    
+
 }

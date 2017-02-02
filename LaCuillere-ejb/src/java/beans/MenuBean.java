@@ -27,10 +27,12 @@ public class MenuBean implements MenuInterface{
     @PersistenceContext
     private EntityManager em;
     
+    @Override
     public void ajouterMenu(Menu m){
         em.persist(m);
     }
     
+    @Override
     public List<Menu> getMenuByIdRestaurateur(Utilisateur u){
         List<Menu> listM = new ArrayList<Menu>();
         Query query = em.createNamedQuery("Menu.findByIdRestaurateur");
@@ -38,6 +40,7 @@ public class MenuBean implements MenuInterface{
         return listM;
     }
     
+    @Override
     public Menu getMenuById(Long idMenu){
         Menu m = new Menu();
         Query query = em.createNamedQuery("Menu.findByIdMenu");

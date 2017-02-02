@@ -5,37 +5,26 @@
  */
 package servlets;
 
-import Interfaces.AnnonceInterface;
-import Interfaces.MenuInterface;
-import Interfaces.PlageInterface;
+import Interfaces.CategorieInterface;
+import entities.Categorie;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Interfaces.UtilisateurInterface;
-import entities.Annonce;
-import entities.Menu;
-import entities.Plage;
-import entities.Utilisateur;
-import java.util.List;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Ibra
  */
-public class servletAuthentification extends HttpServlet {
+public class servletGetAllCateg extends HttpServlet {
 
     @EJB
-    UtilisateurInterface comptesInterface;
-    @EJB
-    AnnonceInterface annonceInterface;
-    @EJB
-    PlageInterface plageInterface;
-    
+    CategorieInterface cateInterface;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -53,10 +42,10 @@ public class servletAuthentification extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet servletAuthentification</title>");
+            out.println("<title>Servlet servletGetAllCateg</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet servletAuthentification at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet servletGetAllCateg at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -74,7 +63,7 @@ public class servletAuthentification extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
     }
 
     /**
@@ -88,30 +77,10 @@ public class servletAuthentification extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Annonce> listeAnnonce = annonceInterface.getAllAnonces();
-        List<Plage> listePlage = plageInterface.getAllPlages();
-        Utilisateur usr = comptesInterface.getUser(request.getParameter("user"), request.getParameter("pass"));
-        /* Création ou récupération de la session */
-        HttpSession session = request.getSession();
-        
-        session.setAttribute("user", usr);
-        System.out.println(((Utilisateur)session.getAttribute("user")).getNomUsr());
-        
-        request.setAttribute("listeAnnonces", listeAnnonce);
-        request.setAttribute("listePlage", listePlage);
-        if (usr != null) {
-            if (usr.getPasswordUser() != null) {
-                if (usr.getProfileUsr().equals("CLT")) {
-                    getServletConfig().getServletContext().getRequestDispatcher("/ClientSpace.jsp").forward(request, response);
-                } else {
-                    response.sendRedirect("RestaurateurHome.html");
-                }
-
-            } else {
-                response.sendRedirect("Login.html");
-            }
-        } else {
-            response.sendRedirect("Login.html");
+        List<Categorie> listCate = cateInterface.getCate();
+        response.getWriter().write("<td>rowspan=" + listCate.size() + ">Choose your category</td>");
+        for (Categorie c : listCate) {
+            response.getWriter().write("<td><input type='checkbox' name='categorieRes' value='" + c.getIdCate() + "'/>" + c.getNomCate() + "</td>");
         }
     }
 

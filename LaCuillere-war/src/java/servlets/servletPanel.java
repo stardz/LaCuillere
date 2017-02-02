@@ -88,13 +88,16 @@ public class servletPanel extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         ArrayList<String> months=new ArrayList<String>(Arrays.asList("Jan", "Fev", "Mar", "Avr", "Mai", "Jun", "Jui", "Aou", "Sep", "Oct", "Nov", "Dec"));
 //        int idAnnonce = Integer.parseInt(request.getParameter("annonce"));
 //        Annonce a = annonceInterface.getAnnonceById(idAnnonce);
         Plage pge = plageInterface.getPlageById(Integer.parseInt(request.getParameter("idPlage"))); // request.setAttribute("annonce", listeAnnonce);
         Menu menu = menuInterface.getMenuById(Integer.parseInt(request.getParameter("menu"))); // request.setAttribute("annonce", listeAnnonce);
+        
         response.setContentType("text/html");
         response.getWriter().write("<li>");
+        response.getWriter().write("<span class='ids_res' id='"+menu.getIdMenu()+"-"+pge.getIdPlage()+"'></span>");
         response.getWriter().write("<time datetime='2014-07-31 1600'>");
         response.getWriter().write("<span class='day'>"+pge.getJour()+"</span>");
         response.getWriter().write("<span class='month'>"+months.get(pge.getMois()-1)+"</span>");
@@ -106,7 +109,7 @@ public class servletPanel extends HttpServlet {
         response.getWriter().write("<h2 class='title'>"+menu.getNomMenu()+"</h2>");
         response.getWriter().write("<p class='desc'>"+menu.getAnnonceIdAnnonce().getRestaurantCollection().toArray()[0].toString()+"</p>");
         response.getWriter().write("<ul>");
-        response.getWriter().write("<li style='width:33%;'><span class='fa fa-eur'></span>"+menu.getPrixMenu().multiply(new BigInteger(pge.getNombrePlacesPlage()+""))+" € </li>");
+        response.getWriter().write("<li style='width:33%;'><span class='fa fa-eur'></span><span class='prixpart'>"+menu.getPrixMenu().multiply(new BigInteger(pge.getNombrePlacesPlage()+""))+"</span> € </li>");
         response.getWriter().write("<li style='width:34%;'><span class='fa fa-male'></span>"+pge.getNombrePlacesPlage()+"</li>");
         response.getWriter().write("</ul>");
         response.getWriter().write("</div>");
@@ -118,8 +121,7 @@ public class servletPanel extends HttpServlet {
         response.getWriter().write("</ul>");
         response.getWriter().write("</div>");
         response.getWriter().write("</li>");
-//        request.setAttribute("menuReserve", menu);
-//        request.setAttribute("plageReserve", pge);
+        
     }
 
     /**
