@@ -27,26 +27,17 @@ public class UtilisateurBean implements UtilisateurInterface {
 
     @Override
     public Utilisateur getUser(String login, String pass) {
-       
-       Utilisateur u=new Utilisateur();
-       /* u.setNomUsr("test");
-        u.setPasswordUser("test");
-        return u;*/
-        List<Utilisateur> usrs=em.createNamedQuery("Utilisateur.findByNomUsr").setParameter("nomUsr", login).getResultList();
-        
-        try {
-            u= usrs.get(usrs.size()-1);
-            if(!u.getPasswordUser().equals(pass))return null;
-            else return u;
-            
-        } catch (Exception e) {
-            return null;
-        }
+
+        Utilisateur u = new Utilisateur();
+
+        List<Utilisateur> usrs = em.createNamedQuery("Utilisateur.findByNomUsr").setParameter("nomUsr", login).getResultList();
+        u = usrs.get(0);
+        return u;
+
     }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-
     @Override
     public void registerUser(Utilisateur usr) {
         em.persist(usr);

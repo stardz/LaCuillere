@@ -40,8 +40,8 @@ public class RestaurantBean implements RestaurantInterface{
     public Restaurant getRestaurantById(Long idRestaurant){
         Restaurant r = new Restaurant(); 
         Query query = em.createNamedQuery("Restaurant.findByIdRestaurant");
-        List<Restaurant> list = query.setParameter("idRestaurant", query).getResultList();
-        r= list.get(list.size()-1);
+        List<Restaurant> listR = query.setParameter("idRestaurant", idRestaurant).getResultList();
+        r= listR.get(listR.size()-1);
         return r;
     }
         @Override

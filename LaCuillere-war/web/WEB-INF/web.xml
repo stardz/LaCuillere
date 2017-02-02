@@ -16,6 +16,38 @@
         <servlet-name>servletPanel</servlet-name>
         <servlet-class>servlets.servletPanel</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>servletGetCategorie</servlet-name>
+        <servlet-class>servlets.servletGetCategorie</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletCreateMenu</servlet-name>
+        <servlet-class>servlets.servletCreateMenu</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletCreateRestaurant</servlet-name>
+        <servlet-class>servlets.servletCreateRestaurant</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletCreateAnnonce</servlet-name>
+        <servlet-class>servlets.servletCreateAnnonce</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletGetMenu</servlet-name>
+        <servlet-class>servlets.servletGetMenu</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletGetRestaurant</servlet-name>
+        <servlet-class>servlets.servletGetRestaurant</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servletCreateReservation</servlet-name>
+        <servlet-class>servlets.servletCreateReservation</servlet-class>
+    </servlet>
+     <servlet>
+        <servlet-name>servletRefreshReservation</servlet-name>
+        <servlet-class>servlets.servletRefreshReservation</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>authentificationServlet</servlet-name>
         <url-pattern>/authentificationServlet</url-pattern>
@@ -31,6 +63,38 @@
     <servlet-mapping>
         <servlet-name>servletPanel</servlet-name>
         <url-pattern>/servletPanel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletGetCategorie</servlet-name>
+        <url-pattern>/servletGetCategorie</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletCreateMenu</servlet-name>
+        <url-pattern>/servletCreateMenu</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletCreateRestaurant</servlet-name>
+        <url-pattern>/servletCreateRestaurant</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletCreateAnnonce</servlet-name>
+        <url-pattern>/servletCreateAnnonce</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletGetMenu</servlet-name>
+        <url-pattern>/servletGetMenu</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletGetRestaurant</servlet-name>
+        <url-pattern>/servletGetRestaurant</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletCreateReservation</servlet-name>
+        <url-pattern>/servletCreateReservation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servletRefreshReservation</servlet-name>
+        <url-pattern>/servletRefreshReservation</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -5,16 +5,17 @@
  */
 package Interfaces;
 
-import entities.Categorie;
+import entities.Reservation;
 import java.util.List;
 import javax.ejb.Local;
 
 /**
  *
- * @author dell
+ * @author Ibra
  */
 @Local
-public interface CategorieInterface {
-     public List<Categorie> getCate();
-     public Categorie getCateById(Integer id_cate);
+public interface ReservationInterface {
+    public void ajouterReservation(Reservation r);
+    public List<Reservation> getAllReservation();
+    public List<Reservation> getReservationByUser(int idUser);
 }

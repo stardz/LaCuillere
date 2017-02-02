@@ -6,10 +6,10 @@
 package servlets;
 
 import Interfaces.MenuInterface;
+import Interfaces.UtilisateurInterface;
 import entities.Menu;
+import entities.Utilisateur;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -24,57 +24,34 @@ import javax.servlet.http.HttpServletResponse;
 public class servletGetMenu extends HttpServlet {
 
     @EJB
-    MenuInterface mInterface;
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    MenuInterface mInterface;  
+    @EJB
+    UtilisateurInterface uInterface;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Menu> listM = new ArrayList<Menu>();
-//        listM = mInterface.getMenuByIdRestaurateur(usr);
-        request.setAttribute("listM", listM);
+
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Utilisateur usr = uInterface.getUser("FANG", "123");
+        List<Menu> listMenu = mInterface.getMenuByIdRestaurateur(usr);       
+        response.getWriter().write("<td> Choose your menu</td>");
+            for(Menu m: listMenu){
+                response.getWriter().write("<td><input type='checkbox' name='MenuList' value='"+m.getIdMenu()+"'/>"+m.getNomMenu()+"</td>");
+            }       
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+
     @Override
     public String getServletInfo() {
         return "Short description";

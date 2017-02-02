@@ -4,12 +4,8 @@
     Author     : dell
 --%>
 
-<%@page import="entities.Menu"%>
-<%@page import="java.util.List"%>
-<%@page import="entities.Restaurant"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="servlets.servletGetRestaurant"  %>
-<%@page import="javax.servlet.RequestDispatcher" %>
 
 <!DOCTYPE html>
 <html>
@@ -17,6 +13,10 @@
         <title>CreateADS</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
   <body>
         <div class="head">
@@ -25,47 +25,55 @@
         
         <div class="corp">
             <p>Please fill in the form (* is required) </p>
-            <form action="servletCreateRestaurant" method="post">
-            <table border="0">
+            <form action="servletCreateAnnonce" method="post">
+            <table border="1">
+               <tr id="listRes"> 
+                <script>                  
+                    $.post("servletGetRestaurant", function (response) {
+                        $('#listRes').append(response.toString());
+                });  
+                </script>                  
+                </tr>
+                <tr id="listMenu"> 
+                <script>                  
+                    $.post("servletGetMenu", function (response) {
+                        $('#listMenu').append(response.toString());
+                });  
+                </script>                  
+                </tr>
                 <tr>
-                    <td>Choose your restaurant</td>
+                    <td>The available time :</td>
                     <td>
-                       <select name="annonceIdRes">
-                    <%
-                        RequestDispatcher rd = request.getRequestDispatcher("/servletGetCategorie");
-                        List<Restaurant> listR = (List<Restaurant>)request.getAttribute("listR");
-                        for(Restaurant r: listR){                           
-                     %>
-                     <option value =<%= r.getIdRestaurant() %> > <%= r.getNomRes() %></option>
-                     <% } %>
-                       </select> 
+                        <ul>
+                            <li>An:<input type="text" name="anneAnnonce" required="required" /></li>
+                            <li>Month:<input type="text" name="moisAnnonce" required="required" /></li>
+                            <li>Day:<input type="text" name="jourAnnonce" required="required" /></li>
+                        </ul>
                     </td>
                 </tr>
                 <tr>
-<!--                  <%
-                    List<Menu> listM = (List<Menu>)request.getAttribute("listM");
-                    out.println("<td rowspan="+listM.size()+">Choose your Menu</td>");
-                    out.println(listM.size());
-                    for(Menu m: listM){
-                        out.println("<td><input type='checkbox' name='MenuList' value='"+m.getIdMenu()+"'/>"+m.getNomMenu()+" - "+m.getPrixMenu()+"</td>");
-                    }
-                        %>                   -->
-                        
+                    <td>Strat Hour : </td>
+                    <td><input type="text" name="heureDebut" required="required" /></td>
                 </tr>
                 <tr>
-                    
+                    <td>End Hour : </td>
+                    <td><input type="text" name="heureFin" required="required" /></td>
                 </tr>
                 <tr>
-                    <td>The available time</td>
-                    <td><input type="date" name="dateAnnonce" /> Places numbers : <input type="text" name = "numPlace"></td>
+                    <td>Places numbers : </td>
+                    <td><input type="text" name = "numPlace" required="required" /></td>
                 </tr>
                 <tr>
-                    <td>Telenumber</td>
+                    <td>Telenumber : </td>
                     <td><input type="text" name="teleAnnonce" /></td>
                 </tr>
                 <tr>
-                    <td>Email</td>
+                    <td>Email : </td>
                     <td><input type="text" name="emailAnnonce" /></td>
+                </tr>
+                <tr>
+                    <td>Description :</td>
+                    <td><input type="text" name="descriptionAnnonce" /></td>
                 </tr>
             </table>
              <br/>
