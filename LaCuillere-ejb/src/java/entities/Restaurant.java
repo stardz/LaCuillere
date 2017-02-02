@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Restaurant.findByTeleRes", query = "SELECT r FROM Restaurant r WHERE r.teleRes = :teleRes"),
     @NamedQuery(name = "Restaurant.findByEmailRes", query = "SELECT r FROM Restaurant r WHERE r.emailRes = :emailRes"),
     @NamedQuery(name = "Restaurant.findByAdresseRes", query = "SELECT r FROM Restaurant r WHERE r.adresseRes = :adresseRes")})
+
 public class Restaurant implements Serializable {
 
     private static final long serialVersionUID = 1L;

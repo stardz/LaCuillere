@@ -8,6 +8,7 @@ package servlets;
 import Interfaces.AnnonceInterface;
 import Interfaces.MenuInterface;
 import Interfaces.PlageInterface;
+import Interfaces.RestaurantInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -19,6 +20,7 @@ import Interfaces.UtilisateurInterface;
 import entities.Annonce;
 import entities.Menu;
 import entities.Plage;
+import entities.Restaurant;
 import entities.Utilisateur;
 import java.util.List;
 
@@ -34,7 +36,11 @@ public class servletAuthentification extends HttpServlet {
     AnnonceInterface annonceInterface;
     @EJB
     PlageInterface plageInterface;
-
+ @EJB
+    RestaurantInterface restaurantInterface;
+ 
+  @EJB
+    MenuInterface menuInterface;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -89,16 +95,22 @@ public class servletAuthentification extends HttpServlet {
             throws ServletException, IOException {
         List<Annonce> listeAnnonce = annonceInterface.getAllAnonces();
         List<Plage> listePlage = plageInterface.getAllPlages();
+         List<Restaurant> listeRestaurants = restaurantInterface.getAllRestaurants();
+          List<Menu> listeMenu = menuInterface.getAllAnonces();
         Utilisateur usr = comptesInterface.getUser(request.getParameter("user"), request.getParameter("pass"));
-        //System.out.println(usr.getPasswordUser()); 
+        //System.out.println(usr.getPasswordUser());
+       request.setAttribute("listeRestaurants", listeRestaurants);
         request.setAttribute("listeAnnonces", listeAnnonce);
         request.setAttribute("listePlage", listePlage);
+        request.setAttribute("listeMenu", listeMenu);
+        
         if (usr != null) {
             if (usr.getPasswordUser() != null) {
                 if (usr.getProfileUsr().equals("CLT")) {
                     getServletConfig().getServletContext().getRequestDispatcher("/ClientSpace.jsp").forward(request, response);
                 } else {
-                    response.sendRedirect("RestaurateurHome.html");
+                    getServletConfig().getServletContext().getRequestDispatcher("/RestaurateurSpace.jsp").forward(request, response);
+                   // response.sendRedirect("RestaurateurHome.html");
                 }
 
             } else {

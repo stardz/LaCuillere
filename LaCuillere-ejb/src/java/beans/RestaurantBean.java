@@ -44,4 +44,11 @@ public class RestaurantBean implements RestaurantInterface{
         r= list.get(list.size()-1);
         return r;
     }
+        @Override
+    public List<Restaurant> getAllRestaurants() {
+        List<Restaurant> restaurants=(List<Restaurant>) em.createNamedQuery("Restaurant.findAll").getResultList();
+        return restaurants;
+    }
+    
+    
 }
