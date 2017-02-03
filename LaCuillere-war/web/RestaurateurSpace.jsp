@@ -98,7 +98,7 @@
                             }
                         %>
                     </div>
-                     <button class='w3-btn w3-green' >Ajouter Restaurant</button>;
+                  <a href="jsp/CreateRestaurant.jsp" class="btn btn-info" role="button">Ajouter Restaurant</a>
                 </div>
                   
                     

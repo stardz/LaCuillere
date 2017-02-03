@@ -82,7 +82,7 @@ public class servletRefreshReservation extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session=request.getSession();
         Utilisateur usr=(Utilisateur)session.getAttribute("user");
-        System.out.println("=========================="+usr.getAdressUsr());
+//        System.out.println("=========================="+usr.getAdressUsr());
         for (Reservation r : reservationInterface.getReservationByUser(usr.getIdUtilisateur())) {
             response.getWriter().write("<tr>");
             response.getWriter().write("<td>"+r.getIdReservation()+"</td>");

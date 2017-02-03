@@ -21,7 +21,7 @@ public interface MenuInterface {
     
     public List<Menu> getAllAnonces();
     public void ajouterMenu(Menu m);
-    public List<Menu> getMenuByIdRestaurateur(Utilisateur u);
+    public List<Menu> getMenuByIdRestaurateur(int idU);
     public Menu getMenuById(Long idMenu);
     public List<Menu> getAllMenus();
     public Menu getMenuById(int idMenu);

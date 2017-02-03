@@ -25,18 +25,18 @@
         
         <div class="corp">
             <p>Please fill in the form (* is required) </p>
-            <form action="servletCreateAnnonce" method="post">
+            <form action="../servletCreateAnnonce" method="post">
             <table border="1">
                <tr id="listRes"> 
                 <script>                  
-                    $.post("servletGetRestaurant", function (response) {
+                    $.post("../servletGetRestaurant", function (response) {
                         $('#listRes').append(response.toString());
                 });  
                 </script>                  
                 </tr>
                 <tr id="listMenu"> 
                 <script>                  
-                    $.post("servletGetMenu", function (response) {
+                    $.post("../servletGetMenu", function (response) {
                         $('#listMenu').append(response.toString());
                 });  
                 </script>                  

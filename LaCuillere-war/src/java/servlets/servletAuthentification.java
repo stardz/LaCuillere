@@ -37,7 +37,7 @@ public class servletAuthentification extends HttpServlet {
     AnnonceInterface annonceInterface;
     @EJB
     PlageInterface plageInterface;
- @EJB
+    @EJB
     RestaurantInterface restaurantInterface;
  
   @EJB
@@ -101,9 +101,7 @@ public class servletAuthentification extends HttpServlet {
            Utilisateur usr = comptesInterface.getUser(request.getParameter("user"), request.getParameter("pass"));
          List<Restaurant> listeRestaurants = restaurantInterface.getRestaurantByUser(usr.getIdUtilisateur());
           List<Menu> listeMenu = menuInterface.getMenuByUser(usr.getIdUtilisateur());
-            List<Annonce> listeAnnonce = annonceInterface.getAllAnonces();
-     
-        //System.out.println(usr.getPasswordUser());
+            List<Annonce> listeAnnonce = annonceInterface.getAllAnonces();     
        request.setAttribute("listeRestaurants", listeRestaurants);
         request.setAttribute("listeAnnonces", listeAnnonce);
         request.setAttribute("listePlage", listePlage);

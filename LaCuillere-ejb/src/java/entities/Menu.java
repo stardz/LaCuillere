@@ -11,6 +11,8 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -37,15 +39,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Menu.findByDescriptionMenu", query = "SELECT m FROM Menu m WHERE m.descriptionMenu = :descriptionMenu"),
     @NamedQuery(name = "Menu.findByNomMenu", query = "SELECT m FROM Menu m WHERE m.nomMenu = :nomMenu"),
     @NamedQuery(name = "Menu.findByPrixMenu", query = "SELECT m FROM Menu m WHERE m.prixMenu = :prixMenu"),
-    @NamedQuery(name = "Menu.findByIdRestaurateur", query = "SELECT m FROM Menu m WHERE m.menuIdUtilisateur = :menuRestaurateur"),
-@NamedQuery(name = "Menu.findByUser", query = "SELECT m FROM Menu m WHERE m.menuIdUtilisateur.idUtilisateur = :idUser")
+    @NamedQuery(name = "Menu.findByIdRestaurateur", query = "SELECT m FROM Menu m WHERE m.menuIdUtilisateur.idUtilisateur = :menuRestaurateur"),
+    @NamedQuery(name = "Menu.findByUser", query = "SELECT m FROM Menu m WHERE m.menuIdUtilisateur.idUtilisateur = :idUser")
 })
 public class Menu implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_menu")
     private Long idMenu;
     @Size(max = 255)
