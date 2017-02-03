@@ -25,7 +25,7 @@
         
         <div class="corp">
             <p>Please fill in the form (* is required) </p>
-            <form action="servletCreateRestaurant" method="post">
+            <form action="../servletCreateRestaurant" method="post">
             <table border="0">
                 <tr>
                     <td>Name*</td>

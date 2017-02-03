@@ -36,7 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Restaurant.findByTeleRes", query = "SELECT r FROM Restaurant r WHERE r.teleRes = :teleRes"),
     @NamedQuery(name = "Restaurant.findByEmailRes", query = "SELECT r FROM Restaurant r WHERE r.emailRes = :emailRes"),
     @NamedQuery(name = "Restaurant.findByAdresseRes", query = "SELECT r FROM Restaurant r WHERE r.adresseRes = :adresseRes"),
-    @NamedQuery(name = "Restaurant.findByIdRestaurateur", query = "SELECT r FROM Restaurant r WHERE r.restaurantIdUtilisateur = :u")})
+    @NamedQuery(name = "Restaurant.findByIdRestaurateur", query = "SELECT r FROM Restaurant r WHERE r.restaurantIdUtilisateur = :u"),
+   @NamedQuery(name = "Restaurant.findByUser", query = "select r from Restaurant r  where r.restaurantIdUtilisateur.idUtilisateur = :idUser")
+})
 public class Restaurant implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -66,6 +68,8 @@ public class Restaurant implements Serializable {
     @JoinColumn(name = "restaurant_id_utilisateur", referencedColumnName = "id_utilisateur")
     @ManyToOne
     private Utilisateur restaurantIdUtilisateur;
+     // @Column(name = "restaurant_id_utilisateur")
+   
 
     public Restaurant() {
     }

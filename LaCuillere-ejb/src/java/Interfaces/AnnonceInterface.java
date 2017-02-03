@@ -25,5 +25,6 @@ public interface AnnonceInterface {
     public List<Annonce> getAllAnonces();
     public Annonce getAnnonceById(int idAnnonce);
     public void ajouterAnnonce(Annonce a);
+ //    public List<Annonce> getAnnonceByUser(int idUser);
 
 }

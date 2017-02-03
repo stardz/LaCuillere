@@ -16,7 +16,9 @@ import javax.ejb.Local;
  */
 @Local
 public interface RestaurantInterface {
+    public List<Restaurant> getAllRestaurants();
     public void ajouterRestaurant(Restaurant r);
     public List<Restaurant> getRestaurantByIdRestaurateur(Utilisateur u);
     public Restaurant getRestaurantById(Long idRestaurant);
+      public List<Restaurant> getRestaurantByUser(int idUser);
 }

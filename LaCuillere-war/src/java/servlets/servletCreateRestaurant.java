@@ -34,6 +34,7 @@ public class servletCreateRestaurant extends HttpServlet {
     CategorieInterface cateInterface;
     @EJB
     UtilisateurInterface uInterface;
+    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -67,7 +68,8 @@ public class servletCreateRestaurant extends HttpServlet {
         r.setAdresseRes(adressRes);
        
         HttpSession session = request.getSession();
-        Utilisateur usr = (Utilisateur) session.getAttribute("user");
+        //Utilisateur usr = (Utilisateur) session.getAttribute("user");
+         Utilisateur usr = uInterface.getUser(request.getParameter("user"), request.getParameter("pass"));
 //      Utilisateur usr = uInterface.getUser("FANG", "123");
         r.setRestaurantIdUtilisateur(usr);
 

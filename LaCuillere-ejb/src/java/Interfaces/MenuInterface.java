@@ -5,6 +5,7 @@
  */
 package Interfaces;
 
+import entities.Annonce;
 import entities.Menu;
 import entities.Utilisateur;
 import java.util.List;
@@ -17,9 +18,12 @@ import javax.ejb.Local;
 
 @Local
 public interface MenuInterface {
+    
+    public List<Menu> getAllAnonces();
     public void ajouterMenu(Menu m);
     public List<Menu> getMenuByIdRestaurateur(int idU);
     public Menu getMenuById(Long idMenu);
     public List<Menu> getAllMenus();
     public Menu getMenuById(int idMenu);
+       public List<Menu> getMenuByUser(int idUser);
 }

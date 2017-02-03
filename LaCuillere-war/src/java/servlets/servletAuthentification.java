@@ -8,6 +8,7 @@ package servlets;
 import Interfaces.AnnonceInterface;
 import Interfaces.MenuInterface;
 import Interfaces.PlageInterface;
+import Interfaces.RestaurantInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -19,6 +20,7 @@ import Interfaces.UtilisateurInterface;
 import entities.Annonce;
 import entities.Menu;
 import entities.Plage;
+import entities.Restaurant;
 import entities.Utilisateur;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -35,7 +37,11 @@ public class servletAuthentification extends HttpServlet {
     AnnonceInterface annonceInterface;
     @EJB
     PlageInterface plageInterface;
-    
+    @EJB
+    RestaurantInterface restaurantInterface;
+ 
+  @EJB
+    MenuInterface menuInterface;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -88,23 +94,26 @@ public class servletAuthentification extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Annonce> listeAnnonce = annonceInterface.getAllAnonces();
+      
         List<Plage> listePlage = plageInterface.getAllPlages();
-        Utilisateur usr = comptesInterface.getUser(request.getParameter("user"), request.getParameter("pass"));
-        /* Création ou récupération de la session */
-        HttpSession session = request.getSession();
-        
-        session.setAttribute("user", usr);
-        System.out.println(((Utilisateur)session.getAttribute("user")).getNomUsr());
-        
+        HttpSession session=request.getSession();
+        //Utilisateur user=(Utilisateur)session.getAttribute("user");
+           Utilisateur usr = comptesInterface.getUser(request.getParameter("user"), request.getParameter("pass"));
+         List<Restaurant> listeRestaurants = restaurantInterface.getRestaurantByUser(usr.getIdUtilisateur());
+          List<Menu> listeMenu = menuInterface.getMenuByUser(usr.getIdUtilisateur());
+            List<Annonce> listeAnnonce = annonceInterface.getAllAnonces();     
+       request.setAttribute("listeRestaurants", listeRestaurants);
         request.setAttribute("listeAnnonces", listeAnnonce);
         request.setAttribute("listePlage", listePlage);
+        request.setAttribute("listeMenu", listeMenu);
+        
         if (usr != null) {
             if (usr.getPasswordUser() != null) {
                 if (usr.getProfileUsr().equals("CLT")) {
                     getServletConfig().getServletContext().getRequestDispatcher("/ClientSpace.jsp").forward(request, response);
                 } else {
-                    response.sendRedirect("RestaurateurHome.html");
+                    getServletConfig().getServletContext().getRequestDispatcher("/RestaurateurSpace.jsp").forward(request, response);
+                   // response.sendRedirect("RestaurateurHome.html");
                 }
 
             } else {
