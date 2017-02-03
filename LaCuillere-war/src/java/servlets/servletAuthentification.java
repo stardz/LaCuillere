@@ -97,9 +97,9 @@ public class servletAuthentification extends HttpServlet {
       
         List<Plage> listePlage = plageInterface.getAllPlages();
         HttpSession session=request.getSession();
-        //Utilisateur user=(Utilisateur)session.getAttribute("user");
-           Utilisateur usr = comptesInterface.getUser(request.getParameter("user"), request.getParameter("pass"));
-         List<Restaurant> listeRestaurants = restaurantInterface.getRestaurantByUser(usr.getIdUtilisateur());
+         Utilisateur usr = comptesInterface.getUser(request.getParameter("user"), request.getParameter("pass"));
+        session.setAttribute("user",usr);
+        List<Restaurant> listeRestaurants = restaurantInterface.getRestaurantByUser(usr.getIdUtilisateur());
           List<Menu> listeMenu = menuInterface.getMenuByUser(usr.getIdUtilisateur());
             List<Annonce> listeAnnonce = annonceInterface.getAllAnonces();     
        request.setAttribute("listeRestaurants", listeRestaurants);

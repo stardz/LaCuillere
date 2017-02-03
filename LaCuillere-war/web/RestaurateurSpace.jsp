@@ -74,90 +74,90 @@
             </ul>
 
             <div class="tab-content clearfix">
-                
+
                 <div class="tab-pane active" id="1b">
-                     <button class='w3-btn w3-green' style='margin-left: 900px'>Ajouter Restaurant</button>;
-                     <br/>;
+                    <button class='w3-btn w3-green' style='margin-left: 900px' onclick="location.href = 'jsp/CreateRestaurant.jsp';">Ajouter Restaurant</button>;
+                    <br/>;
                     <div style="display: inline-block; overflow-y: scroll; height:800px; width: 100%;">
                         <%
                             List<Restaurant> listeRest = (List<Restaurant>) request.getAttribute("listeRestaurants");
                             for (Restaurant it : listeRest) {
-                               // out.println("<br/>");
-                                out.println("<div id='ann_" + it.getNomRes()+ "' class='w3-card-12' style='width:250px;height:300px;margin:5px;display:inline-block;'>");
+                                // out.println("<br/>");
+                                out.println("<div id='ann_" + it.getNomRes() + "' class='w3-card-12' style='width:250px;height:300px;margin:5px;display:inline-block;'>");
                                 out.println("  <img src='imgs/1.png' alt='Restaurant' style='width:100%;height:auto;'>");
                                 out.println("  <div class='w3-container w3-center'>");
-                                out.println("    <p style='color:blue;'>Nom:" +it.getNomRes()+ "</p>");
-                                out.println("    <p style='color:black;'>Adresse:"+ it.getAdresseRes()+ "</p>");
-                                out.println("    <p style='color:black;'>Tel:"+ it.getTeleRes()+ "</p>");
+                                out.println("    <p style='color:blue;'>Nom:" + it.getNomRes() + "</p>");
+                                out.println("    <p style='color:black;'>Adresse:" + it.getAdresseRes() + "</p>");
+                                out.println("    <p style='color:black;'>Tel:" + it.getTeleRes() + "</p>");
 //                                out.println("<div>");
-                             //   out.println("<p style='color:black;'>Rating : <i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-half-o' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-o' aria-hidden='true' style='display: inline-block;'></i></p>");
+                                //   out.println("<p style='color:black;'>Rating : <i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-half-o' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-o' aria-hidden='true' style='display: inline-block;'></i></p>");
 //                                out.println("</div>");
-                               // out.println("<button class='w3-btn w3-green' style='margin-bottom:5px;' onclick='filterMenus(" + it.getIdRestaurant()+ ")'>Voir nos Menus!</button>");
+                                // out.println("<button class='w3-btn w3-green' style='margin-bottom:5px;' onclick='filterMenus(" + it.getIdRestaurant()+ ")'>Voir nos Menus!</button>");
                                 out.println("  </div>");
                                 out.println("</div>");
                             }
                         %>
                     </div>
-                  <a href="jsp/CreateRestaurant.jsp" class="btn btn-info" role="button">Ajouter Restaurant</a>
+                    <button class='w3-btn w3-green' style='margin-left: 900px' onclick="location.href = 'jsp/CreateRestaurant.jsp';">Ajouter Restaurant</button>;
                 </div>
-                  
-                    
-                    <div class="tab-pane " id="2b">
-                     <button class='w3-btn w3-green' style='margin-left: 900px'>Ajouter Annonce</button>;
-                     <br/>;
+
+
+                <div class="tab-pane " id="2b">
+                    <button class='w3-btn w3-green' style='margin-left: 900px' onclick="location.href = 'jsp/CreateAnnonce.jsp';">Ajouter Annonce</button>;
+                    <br/>;
                     <div style="display: inline-block; overflow-y: scroll; height:800px; width: 100%;">
                         <%
                             List<Annonce> listeAnnonce = (List<Annonce>) request.getAttribute("listeAnnonces");
                             for (Annonce it : listeAnnonce) {
-                               // out.println("<br/>");
-                                out.println("<div id='ann_" + it.getDescriptionAnnonce()+ "' class='w3-card-12' style='width:250px;height:300px;margin:5px;display:inline-block;'>");
+                                // out.println("<br/>");
+                                out.println("<div id='ann_" + it.getDescriptionAnnonce() + "' class='w3-card-12' style='width:250px;height:300px;margin:5px;display:inline-block;'>");
                                 out.println("  <img src='imgs/1.png' alt='Annonce' style='width:100%;height:auto;'>");
                                 out.println("  <div class='w3-container w3-center'>");
-                                out.println("    <p style='color:blue;'>" +it.getDescriptionAnnonce()+ "</p>");
-                                out.println("    <p style='color:black;'>Email:"+ it.getEmailAnnonce()+ "</p>");
-                                out.println("    <p style='color:black;'>Tel:"+ it.getTeleAnnonce()+ "</p>");
+                                out.println("    <p style='color:blue;'>" + it.getDescriptionAnnonce() + "</p>");
+                                out.println("    <p style='color:black;'>Email:" + it.getEmailAnnonce() + "</p>");
+                                out.println("    <p style='color:black;'>Tel:" + it.getTeleAnnonce() + "</p>");
 //                                out.println("<div>");
-                             //   out.println("<p style='color:black;'>Rating : <i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-half-o' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-o' aria-hidden='true' style='display: inline-block;'></i></p>");
+                                //   out.println("<p style='color:black;'>Rating : <i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-half-o' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-o' aria-hidden='true' style='display: inline-block;'></i></p>");
 //                                out.println("</div>");
-                               // out.println("<button class='w3-btn w3-green' style='margin-bottom:5px;' onclick='filterMenus(" + it.getIdRestaurant()+ ")'>Voir nos Menus!</button>");
+                                // out.println("<button class='w3-btn w3-green' style='margin-bottom:5px;' onclick='filterMenus(" + it.getIdRestaurant()+ ")'>Voir nos Menus!</button>");
                                 out.println("  </div>");
                                 out.println("</div>");
                             }
                         %>
                     </div>
-                      <button class='w3-btn w3-green' >Ajouter Annonce</button>;
+                    <button class='w3-btn w3-green' onclick="location.href = 'jsp/CreateAnnonce.jsp';">Ajouter Annonce</button>;
                 </div>
-                    
-                    
-                                        <div class="tab-pane " id="3b">
-                     <button class='w3-btn w3-green' style='margin-left: 900px'>Ajouter Menu</button>;
-                     <br/>;
+
+
+                <div class="tab-pane " id="3b">
+                    <button class='w3-btn w3-green' style='margin-left: 900px' onclick="location.href = 'html/CreateMenu.html';">Ajouter Menu</button>;
+                    <br/>;
                     <div style="display: inline-block; overflow-y: scroll; height:800px; width: 100%;">
                         <%
                             List<Menu> listeMenu = (List<Menu>) request.getAttribute("listeMenu");
                             for (Menu it : listeMenu) {
-                               // out.println("<br/>");
-                                out.println("<div id='ann_" + it.getNomMenu()+ "' class='w3-card-12' style='width:250px;height:300px;margin:5px;display:inline-block;'>");
+                                // out.println("<br/>");
+                                out.println("<div id='ann_" + it.getNomMenu() + "' class='w3-card-12' style='width:250px;height:300px;margin:5px;display:inline-block;'>");
                                 out.println("  <img src='imgs/menu.gif' alt='Menu' style='width:100%;height:auto;'>");
                                 out.println("  <div class='w3-container w3-center'>");
-                                out.println("    <p style='color:blue;'>" +it.getNomMenu()+ "</p>");
-                                out.println("    <p style='color:black;'>Desc:"+ it.getDescriptionMenu()+ "</p>");
-                                out.println("    <p style='color:black;'>Prix:"+ it.getPrixMenu()+ "</p>");
+                                out.println("    <p style='color:blue;'>" + it.getNomMenu() + "</p>");
+                                out.println("    <p style='color:black;'>Desc:" + it.getDescriptionMenu() + "</p>");
+                                out.println("    <p style='color:black;'>Prix:" + it.getPrixMenu() + "</p>");
 //                                out.println("<div>");
-                             //   out.println("<p style='color:black;'>Rating : <i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-half-o' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-o' aria-hidden='true' style='display: inline-block;'></i></p>");
+                                //   out.println("<p style='color:black;'>Rating : <i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-half-o' aria-hidden='true' style='display: inline-block;'></i><i class='fa fa-star-o' aria-hidden='true' style='display: inline-block;'></i></p>");
 //                                out.println("</div>");
-                               // out.println("<button class='w3-btn w3-green' style='margin-bottom:5px;' onclick='filterMenus(" + it.getIdRestaurant()+ ")'>Voir nos Menus!</button>");
+                                // out.println("<button class='w3-btn w3-green' style='margin-bottom:5px;' onclick='filterMenus(" + it.getIdRestaurant()+ ")'>Voir nos Menus!</button>");
                                 out.println("  </div>");
                                 out.println("</div>");
                             }
                         %>
                     </div>
-                      <button class='w3-btn w3-green' >Ajouter Menu</button>;
+                    <button class='w3-btn w3-green' style='margin-left: 900px' onclick="location.href = 'html/CreateMenu.html';">Ajouter Menu</button>;
                 </div>
-                    
-                    
+
+
             </div>   
 
-            
+
     </body>
 </html>
