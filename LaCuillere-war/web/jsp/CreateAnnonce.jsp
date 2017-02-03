@@ -45,9 +45,9 @@
                     <td>The available time :</td>
                     <td>
                         <ul>
-                            <li>An:<input type="text" name="anneAnnonce" required="required" /></li>
-                            <li>Month:<input type="text" name="moisAnnonce" required="required" /></li>
-                            <li>Day:<input type="text" name="jourAnnonce" required="required" /></li>
+                            <li>An:<input class="form-control" type="text" name="anneAnnonce" required="required" /></li>
+                            <li>Month:<input class="form-control" type="text" name="moisAnnonce" required="required" /></li>
+                            <li>Day:<input class="form-control" type="text" name="jourAnnonce" required="required" /></li>
                         </ul>
                     </td>
                 </tr>
